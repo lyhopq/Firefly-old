@@ -20,3 +20,16 @@ _cgo_export.*
 _testmain.go
 
 *.exe
+
+
+bin
+exe
+pkg
+src/github.com
+src/code.google.com
+*.log
+src/firefly/public/upload
+src/gorevel
+test-results/
+tmp/
+routes/
