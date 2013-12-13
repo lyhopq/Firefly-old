@@ -24,7 +24,7 @@
         {{with $field := field "password" .}}
         <div class="control-group">
             <label class="control-label" for="{{$field.Name}}">密码</label>
-            <div class="controls"><input id="{{$field.Name}}" type="text" name="{{$field.Name}}" value="{{$field.Flash}}" placeholder="密码">
+            <div class="controls"><input id="{{$field.Name}}" type="password" name="{{$field.Name}}" value="{{$field.Flash}}" placeholder="密码">
                 <span class="text-error">{{$field.Error}}</span>
             </div>
         </div>

@@ -47,21 +47,6 @@ func (user *User) Validate(q *qbs.Qbs, v *revel.Validation) {
 		}
 	}
 
-	v.Required(user.Email).Message("请输入Email")
-	valid = v.Email(user.Email).Message("无效的电子邮件")
-	if valid.Ok {
-		if user.HasEmail(q) {
-			err := &revel.ValidationError{
-				Message: "该邮件已经注册过",
-				Key:     "user.Email",
-			}
-			valid.Error = err
-			valid.Ok = false
-
-			v.Errors = append(v.Errors, err)
-		}
-	}
-
 	v.Required(user.Password).Message("请输入密码")
 	v.MinSize(user.Password, 3).Message("密码最少三位")
 	v.Required(user.ConfirmPassword == user.Password).Message("密码不一致")

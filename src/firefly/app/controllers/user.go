@@ -19,46 +19,39 @@ type User struct {
 	Application
 }
 
-//func (c *User) Signup() revel.Result {
-//	return c.Render()
-//}
-//
-//func (c *User) SignupPost(user models.User) revel.Result {
-//	user.Validate(c.q, c.Validation)
-//	if c.Validation.HasErrors() {
-//		c.Validation.Keep()
-//		c.FlashParams()
-//		return c.Redirect(routes.User.Signup())
-//	}
-//
-//	user.Type = MemberGroup
-//	user.Avatar = defaultAvatar
-//	user.ValidateCode = strings.Replace(uuid.NewUUID().String(), "-", "", -1)
-//
-//	if !user.Save(c.q) {
-//		c.Flash.Error("注册用户失败")
-//		return c.Redirect(routes.User.Signup())
-//	}
-//
-//	subject := "激活账号 —— Revel社区"
-//	content := `<h2><a href="http://gorevel.cn/user/validate/` + user.ValidateCode + `">激活账号</a></h2>`
-//	go sendMail(subject, content, []string{user.Email})
-//
-//	c.Flash.Success(fmt.Sprintf("%s 注册成功，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
-//
-//	perm := new(models.Permissions)
-//	perm.UserId = user.Id
-//	perm.Perm = MemberGroup
-//	perm.Save(c.q)
-//
-//	return c.Redirect(routes.User.Signin())
-//}
+func (c *User) Signup() revel.Result {
+	return c.Render()
+}
+
+func (c *User) SignupPost(user models.User) revel.Result {
+	user.Validate(c.q, c.Validation)
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.User.Signup())
+	}
+
+	user.Type = MemberGroup
+	user.Avatar = defaultAvatar
+
+	if !user.Save(c.q) {
+		c.Flash.Error("注册用户失败")
+		return c.Redirect(routes.User.Signup())
+	}
+
+	//perm := new(models.Permissions)
+	//perm.UserId = user.Id
+	//perm.Perm = MemberGroup
+	//perm.Save(c.q)
+
+	return c.Redirect(routes.User.Signin())
+}
+
 //
 func (c *User) Signin() revel.Result {
 	return c.Render()
 }
 
-//
 func (c *User) SigninPost(name, password string) revel.Result {
 	c.Validation.Required(name).Message("请输入用户名")
 	c.Validation.Required(password).Message("请输入密码")
@@ -92,12 +85,11 @@ func (c *User) SigninPost(name, password string) revel.Result {
 	return c.Redirect(routes.App.Index())
 }
 
-//
 func (c *User) Signout() revel.Result {
-	//	for k := range c.Session {
-	//		delete(c.Session, k)
-	//	}
-	//
+	for k := range c.Session {
+		delete(c.Session, k)
+	}
+
 	return c.Redirect(routes.App.Index())
 }
 

@@ -43,7 +43,9 @@
               <img alt="Text_logo" src="/public/img/firefly.png">
           </a>
           <ul class="nav">
+                <li {{if eq .active "Index"}}class="active"{{end}}><a href="">首页</a></li>
                 <li {{if eq .active "Books"}}class="active"{{end}}><a href="">图书</a></li>
+                <li {{if eq .active "Review"}}class="active"{{end}}><a href="">书评</a></li>
                 <li {{if eq .active "Topic"}}class="active"{{end}}><a href="">社区</a></li>
                 <li {{if eq .active "Users"}}class="active"{{end}}><a href="">会员</a></li>
           </ul>
@@ -55,7 +57,7 @@
             <li>
               <a href="" id="user_message_count"><span class="badge badge-warning">10</span></a>
             </li>
-            {{if .user.isAdmin}}
+            {{if .user.IsAdmin}}
             <li>
               <a href="">管理后台</a>
             </li>
@@ -70,8 +72,8 @@
               </ul>
             </li>
             {{else}}
-            <li class="first"><a href="{{url "User.Signin"}}">注册</a></li>
-            <li class="last"><a href="{{url "User.Signout"}}">登录</a></li>
+            <li class="first"><a href="{{url "User.Signup"}}">注册</a></li>
+            <li class="last"><a href="{{url "User.Signin"}}">登录</a></li>
             {{end}}
           </ul>
         </div>
