@@ -1,6 +1,11 @@
 package controllers
 
-import "github.com/robfig/revel"
+import (
+	"firefly/app/models"
+	"firefly/app/routes"
+	"github.com/coocood/qbs"
+	"github.com/robfig/revel"
+)
 
 //"code.google.com/p/go-uuid/uuid"
 //"fmt"
@@ -54,54 +59,48 @@ func (c *User) Signin() revel.Result {
 }
 
 //
-//func (c *User) SigninPost(name, password string) revel.Result {
-//	c.Validation.Required(name).Message("请输入用户名")
-//	c.Validation.Required(password).Message("请输入密码")
+func (c *User) SigninPost(name, password string) revel.Result {
+	c.Validation.Required(name).Message("请输入用户名")
+	c.Validation.Required(password).Message("请输入密码")
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.User.Signin())
+	}
+
+	user := new(models.User)
+	condition := qbs.NewCondition("name = ?", name).
+		And("hashed_password = ?", models.EncryptPassword(password))
+	c.q.Condition(condition).Find(user)
+
+	if user.Id == 0 {
+		c.Validation.Keep()
+		c.FlashParams()
+		c.Flash.Out["user"] = name
+		c.Flash.Error("用户名或密码错误")
+		return c.Redirect(routes.User.Signin())
+	}
+
+	c.Session["user"] = name
+
+	preUrl, ok := c.Session["preUrl"]
+	if ok {
+		return c.Redirect(preUrl)
+	}
+
+	return c.Redirect(routes.App.Index())
+}
+
 //
-//	if c.Validation.HasErrors() {
-//		c.Validation.Keep()
-//		c.FlashParams()
-//		return c.Redirect(routes.User.Signin())
-//	}
-//
-//	user := new(models.User)
-//	condition := qbs.NewCondition("name = ?", name).
-//		And("hashed_password = ?", models.EncryptPassword(password))
-//	c.q.Condition(condition).Find(user)
-//
-//	if user.Id == 0 {
-//		c.Validation.Keep()
-//		c.FlashParams()
-//		c.Flash.Out["user"] = name
-//		c.Flash.Error("用户名或密码错误")
-//		return c.Redirect(routes.User.Signin())
-//	}
-//
-//	if !user.IsActive {
-//		c.Flash.Error(fmt.Sprintf("您的账号 %s 尚未激活，请到您的邮箱 %s 激活账号！", user.Name, user.Email))
-//		c.Validation.Keep()
-//		c.FlashParams()
-//		return c.Redirect(routes.User.Signin())
-//	}
-//
-//	c.Session["user"] = name
-//
-//	preUrl, ok := c.Session["preUrl"]
-//	fmt.Println(preUrl, "11111111111")
-//	if ok {
-//		return c.Redirect(preUrl)
-//	}
-//
-//	return c.Redirect(routes.App.Index())
-//}
-//
-//func (c *User) Signout() revel.Result {
-//	for k := range c.Session {
-//		delete(c.Session, k)
-//	}
-//
-//	return c.Redirect(routes.App.Index())
-//}
+func (c *User) Signout() revel.Result {
+	//	for k := range c.Session {
+	//		delete(c.Session, k)
+	//	}
+	//
+	return c.Redirect(routes.App.Index())
+}
+
 //
 //func (c *User) Edit() revel.Result {
 //	id := c.RenderArgs["user"].(*models.User).Id

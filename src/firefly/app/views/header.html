@@ -2,16 +2,79 @@
 
 <html>
   <head>
-    <title>{{.title}}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="/public/css/bootstrap.css">
-    <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
-    <script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
-    {{range .moreStyles}}
-      <link rel="stylesheet" type="text/css" href="/public/{{.}}">
-    {{end}}
-    {{range .moreScripts}}
-      <script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
-    {{end}}
+	<title>Firefly</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Book,图书">
+	<meta name="description" content="Book,图书">
+	<!-- <link rel="shortcut icon" href="/public/img/favicon.ico"> -->
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap-responsive.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="/public/css/journal.min.css">-->
+	<link rel="stylesheet" type="text/css" href="/public/css/firefly.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/prettify.css">
+
+	<link rel="stylesheet" type="text/css" href="/public/css/custom.css">
+
+<!-- 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700" rel="stylesheet" type="text/css"> -->
+
+	<script src="/public/js/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/public/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/public/js/prettify.js" type="text/javascript"></script>
+	<script src="/public/js/lang-go-rich.js" type="text/javascript"></script>
+	<script src="/public/js/jquery.timeago.js" type="text/javascript"></script>
+	<script type="text/javascript" src="/public/js/jquery.timeago.zh-CN.js"></script>
+
+	{{range .moreStyles}}
+		<link rel="stylesheet" type="text/css" href="/public/{{.}}">
+	{{end}}
+
+	{{range .moreScripts}}
+		<script src="/public/{{.}}" type="text/javascript" charset="utf-8"></script>
+	{{end}}
   </head>
+
   <body>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="{{url "App.Index"}}">
+              <img alt="Text_logo" src="/public/img/firefly.png">
+          </a>
+          <ul class="nav">
+                <li {{if eq .active "Books"}}class="active"{{end}}><a href="">图书</a></li>
+                <li {{if eq .active "Topic"}}class="active"{{end}}><a href="">社区</a></li>
+                <li {{if eq .active "Users"}}class="active"{{end}}><a href="">会员</a></li>
+          </ul>
+          <form action="/search" class="navbar-search pull-left" method="get">
+            <input type="text" name="q" class="search-query span3" value="" placeholder="搜索">
+          </form>
+          <ul class="nav pull-right" id="userbar">
+            {{if .user}}
+            <li>
+              <a href="" id="user_message_count"><span class="badge badge-warning">10</span></a>
+            </li>
+            {{if .user.isAdmin}}
+            <li>
+              <a href="">管理后台</a>
+            </li>
+            {{end}}
+            <li class="dropdown" id="user_menu">
+              <a href="#user_menu" class="dropdown-toggle" data-toggle="dropdown">{{.user.Name}} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="first"><a href="">我的主页</a></li>
+                <li><a href="">个人资料设置</a></li>
+                <li><a href="">我的收藏</a></li>
+                <li class="last"><a href="">退出</a></li>
+              </ul>
+            </li>
+            {{else}}
+            <li class="first"><a href="{{url "User.Signin"}}">注册</a></li>
+            <li class="last"><a href="{{url "User.Signout"}}">登录</a></li>
+            {{end}}
+          </ul>
+        </div>
+      </div>
+    </div>
+

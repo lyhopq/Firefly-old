@@ -1,0 +1,57 @@
+{{set . "title" "用户登录"}}
+{{template "header.html" .}}
+
+<div class="container">
+<div class="container-fluid">
+  <div class="content">
+    <div class="box">
+      <div class="page-header">
+        <h2>{{.title}}</h2>
+      </div>
+      {{template "flash.html" .}}
+      <form class="form-horizontal" action="{{url "User.SigninPost"}}" method="post">
+        <input type="hidden" name="csrf_token" value="{{.csrf_token}}" />
+	    {{with $field := field "name" .}}
+        <div class="control-group">
+		  <label class="control-label" for="{{$field.Name}}">用户名</label>
+		    <div class="controls">
+		      <input type="text" name="{{$field.Name}}" value="{{$field.Flash}}" id="{{$field.Name}}" placeholder="用户名">
+			  <span class="text-error">{{$field.Error}}</span>
+			</div>
+        </div>
+        {{end}}
+
+        {{with $field := field "password" .}}
+        <div class="control-group">
+            <label class="control-label" for="{{$field.Name}}">密码</label>
+            <div class="controls"><input id="{{$field.Name}}" type="text" name="{{$field.Name}}" value="{{$field.Flash}}" placeholder="密码">
+                <span class="text-error">{{$field.Error}}</span>
+            </div>
+        </div>
+        {{end}}
+
+        {{with $field := field "remember" .}}
+        <div class="control-group checkbox optional">
+            <div class="controls">
+                <label for="{{$field.Name}}"><input id="{{$field.Name}}" name="{{$field.Name}}" style="width:auto;" type="checkbox" value="{{$field.Flash}}" checked="checked" /> 记住登录状态</label>
+            </div>
+        </div>
+        {{end}}
+
+        <div class="control-group">
+			<div class="controls">
+				<button type="submit" class="btn btn-primary">登录</button>
+			</div>
+        </div>
+      </form>
+    
+    </div>
+  
+  </div>
+  <div class="sidebar">
+  
+  </div>
+
+</div>
+</div>
+{{template "footer.html" .}}
