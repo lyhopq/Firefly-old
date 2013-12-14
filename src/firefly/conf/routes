@@ -8,6 +8,11 @@ GET     /                                       App.Index
 
 GET     /signin                                 User.Signin
 
+GET     /book                                   Book.Index
+GET     /book/mr                                Book.MostRead
+GET     /book/mc                                Book.MostComment
+GET     /book/:id                               Book.Show
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

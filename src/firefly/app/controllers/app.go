@@ -65,5 +65,6 @@ type App struct {
 }
 
 func (c *App) Index() revel.Result {
-	return c.Render()
+	books := models.Recommend(c.q, "hited")
+	return c.Render(books)
 }

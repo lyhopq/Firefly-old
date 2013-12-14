@@ -42,11 +42,11 @@
       <div class="navbar-inner">
         <div class="container">
           <a class="brand" href="{{url "App.Index"}}">
-              <img alt="Text_logo" src="/public/img/firefly.png">
+              <img alt="logo" src="/public/img/logo.png">
           </a>
           <ul class="nav">
               <li {{if eq .active "Index"}}class="active"{{end}}><a href="{{url "App.Index"}}">首页</a></li>
-                <li {{if eq .active "Books"}}class="active"{{end}}><a href="">图书</a></li>
+              <li {{if eq .active "Books"}}class="active"{{end}}><a href="{{url "Book.Index"}}">图书</a></li>
                 <li {{if eq .active "Review"}}class="active"{{end}}><a href="">书评</a></li>
                 <li {{if eq .active "Topic"}}class="active"{{end}}><a href="">社区</a></li>
                 <li {{if eq .active "Users"}}class="active"{{end}}><a href="">会员</a></li>
