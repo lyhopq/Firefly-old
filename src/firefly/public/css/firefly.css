@@ -440,7 +440,7 @@ height: 102.39999999999999px;
 width: 76.8px;
 }
 .reviews li .info {
-  width:600px;
+  width:500px;
 }
 
 .reviews li .info .header h5 {
@@ -551,4 +551,9 @@ border-radius: 3px;
 font-size: 12px;
 line-height: 12px;
 outline: none;
+}
+
+.btn a {
+  color: #fff;
+  text-decoration: none;
 }

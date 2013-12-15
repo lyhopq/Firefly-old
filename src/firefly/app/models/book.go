@@ -26,6 +26,10 @@ type Book struct {
 	Hited     int64
 	Readed    int64
 	Commented int64
+	Collected int64
+
+	IsCollected bool
+	IsBooked    bool
 }
 
 func Recommend(q *qbs.Qbs, column string) []*Book {

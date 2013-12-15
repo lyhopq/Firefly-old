@@ -12,6 +12,9 @@ GET     /book                                   Book.Index
 GET     /book/mr                                Book.MostRead
 GET     /book/mc                                Book.MostComment
 GET     /book/:id                               Book.Show
+GET     /book/:id/collect                       Book.Collect
+GET     /book/:id/uncollect                     Book.UnCollect
+#GET     /book/b/:id                               Book.Booking
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
