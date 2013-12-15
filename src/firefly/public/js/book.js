@@ -1,18 +1,4 @@
 $(document).ready(function(){
-    /*
-  $("button.collect").mouseover(function(event) {
-    $(this).removeClass("btn-success").addClass("btn-danger");
-    $(this).children("i").removeClass().addClass("icon-white icon-remove");
-    $(this).children("span").text("取消收藏");
-  });
-  
-  $("button.collect").mouseout(function(event) {
-    $(this).removeClass("btn-danger").addClass("btn-success");
-    $(this).children("i").removeClass().addClass("icon-white icon-ok");
-    $(this).children("span").text("已经收藏");
-  });
-  */
-  
   $("#unbook").mouseover(function(event) {
     $(this).removeClass("btn-success").addClass("btn-danger");
     $(this).children("i").removeClass().addClass("icon-white icon-remove");
@@ -43,7 +29,7 @@ $(document).ready(function(){
         } else {
 		    $.getJSON(id + '/uncollect', function(data) {
                 if(data) {
-                    button.removeClass("collect").addClass("uncollect");
+                    button.removeClass("collect").removeClass("btn-danger").addClass("uncollect");
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入收藏");
                     feed.text(parseInt(feed.text())-1);
@@ -53,5 +39,17 @@ $(document).ready(function(){
 		    	});
 
             };
-	});
+	}).mouseover(function(event) {
+        if($(this).hasClass("collect")) {
+        $(this).removeClass("btn-success").addClass("btn-danger");
+        $(this).children("i").removeClass().addClass("icon-white icon-remove");
+        $(this).children("span").text("取消收藏");
+        };
+  }).mouseout(function(event) {
+        if($(this).hasClass("collect")) {
+        $(this).removeClass("btn-danger").addClass("btn-success");
+        $(this).children("i").removeClass().addClass("icon-white icon-ok");
+        $(this).children("span").text("已经收藏");
+        };
+  });
 });
