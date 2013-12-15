@@ -1,0 +1,12 @@
+<div class="box new_topics">
+  <h2 class="title"><i class="icon-th-list"></i> 最新书评<i class="more"><a href="/topics">更多>></a></i></h2>
+  <ul class="unstyled">
+    {{range .news}}
+    <li>
+      <a href="/user/{{.user.Username}}"><img alt="{{.user.Username}}" title="{{.user.Username}}" class="uface" src="gravatar .user.Email 16" style="width:16px;height:16px;"></a>
+      <a href="/topics/{{.tid}}" title="{{.title}}"></a>
+      <span class="count">{{.like}} 人喜欢 {{.reply}} 人回复</span>
+    </li>
+    {{end}}
+  </ul>
+</div>

@@ -1,0 +1,11 @@
+<div class="box new_topics">
+  <h2 class="title"><i class="icon-qrcode"></i> 最新帖子<i class="more"><a href="/resources">更多>></a></i></h2>
+  <ul class="unstyled">
+    {{range .resources}}
+    <li>
+      <a href="/user/{{.username}}"><img alt="{{.user.Username}}" title="{{.user.Username}}" class="uface" src="gravatar .user.Email 16" style="width:16px;height:16px;"></a>
+      <a href="/resources/{{.id}}" title="{{.title}}"></a>
+    </li>
+    {{end}}
+  </ul>
+</div>

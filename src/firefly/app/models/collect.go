@@ -24,3 +24,14 @@ func FindCollect(q *qbs.Qbs, uid, bid int64) *Collect {
 
 	return col
 }
+
+func AddCollect(q *qbs.Qbs, uid, bid int64) {
+	collect := new(Collect)
+	collect.User = uid
+	collect.Book = bid
+	q.Save(collect)
+}
+
+func RemoveCollect(q *qbs.Qbs, collect *Collect) {
+	q.Delete(collect)
+}

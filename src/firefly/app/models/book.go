@@ -48,6 +48,9 @@ func FindBookById(q *qbs.Qbs, id int64) *Book {
 }
 
 func GetPagination(page int, rows int64, url string) *Pagination {
+	if page < 1 {
+		page = 1
+	}
 	url = url[:strings.Index(url, "=")+1]
 	return NewPagination(page, int(rows), url)
 }
@@ -85,4 +88,41 @@ func (b *Book) CoverImgSrc() string {
 		return fmt.Sprintf("/public/upload/%s", b.Cover)
 	}
 	return fmt.Sprintf("/public/img/%s", b.Cover)
+}
+
+func (b *Book) AddHited(q *qbs.Qbs) {
+	b.Hited += 1
+	type Book struct {
+		Hited int64
+	}
+	book := new(Book)
+	book.Hited = b.Hited
+	q.WhereEqual("id", b.Id).Update(book)
+}
+
+func (b *Book) SetCollected() {
+	b.IsCollected = true
+}
+
+func (b *Book) AddCollect(q *qbs.Qbs) {
+	b.Collected += 1
+	type Book struct {
+		Collected int64
+	}
+	book := new(Book)
+	book.Collected = b.Collected
+	q.WhereEqual("id", b.Id).Update(book)
+}
+
+func (b *Book) SubCollect(q *qbs.Qbs) {
+	b.Collected -= 1
+	if b.Collected < 0 {
+		b.Collected = 0
+	}
+	type Book struct {
+		Collected int64
+	}
+	book := new(Book)
+	book.Collected = b.Collected
+	q.WhereEqual("id", b.Id).Update(book)
 }

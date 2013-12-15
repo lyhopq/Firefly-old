@@ -1,0 +1,21 @@
+<div class="head">
+	<h3 class="pull-left">欢迎来到Firefly图书借阅室</h3>
+    <ul class="nav nav-tabs pull-right">
+	{{if eq .subActive "latestShelf"}}
+		<li class="active"><a href="javascript:;">最新上架</a></li>
+	{{else}}
+    <li class=""><a href="{{url "Book.Index"}}">最新上架</a></li>
+	{{end}}
+	{{if eq .subActive "mostRead"}}
+		<li class="active"><a href="javascript:;">最多借阅</a></li>
+	{{else}}
+    <li><a href="{{url "Book.MostRead"}}">最多借阅</a></li>
+	{{end}}
+	{{if eq .subActive "mostComment"}}
+		<li class="active"><a href="javascript:;">最多评论</a></li>
+	{{else}}
+    <li><a href="{{url "Book.MostComment"}}">最多评论</a></li>
+	{{end}}
+    </ul>
+</div>
+<div class="clearfix"></div>
