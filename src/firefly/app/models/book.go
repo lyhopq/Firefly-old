@@ -18,9 +18,9 @@ type Book struct {
 	Publisher       string `qbs:"size:64"`
 	Language        string `qbs:"size:16"`
 	PublicationDate time.Time
-	Isbn            string `qbs:"size:16,unique,notnull"`
+	Isbn            string `qbs:"size:16,unique,notnull,index"`
 
-	ShelfTime time.Time
+	ShelfTime time.Time `qbs:"created"`
 	Holding   int
 	Existing  int
 	Hited     int64
@@ -28,8 +28,9 @@ type Book struct {
 	Commented int64
 	Collected int64
 
-	IsCollected bool
-	IsBooked    bool
+	IsCollected bool `qbs:"-"`
+	IsBooked    bool `qbs:"-"`
+	IsOwned     bool `qbs:"-"`
 }
 
 func Recommend(q *qbs.Qbs, column string) []*Book {
@@ -100,8 +101,8 @@ func (b *Book) AddHited(q *qbs.Qbs) {
 	q.WhereEqual("id", b.Id).Update(book)
 }
 
-func (b *Book) SetCollected() {
-	b.IsCollected = true
+func (b *Book) SetCollected(c bool) {
+	b.IsCollected = c
 }
 
 func (b *Book) AddCollect(q *qbs.Qbs) {
@@ -125,4 +126,13 @@ func (b *Book) SubCollect(q *qbs.Qbs) {
 	book := new(Book)
 	book.Collected = b.Collected
 	q.WhereEqual("id", b.Id).Update(book)
+}
+
+func (b *Book) SetBorrow(status int) {
+	switch status {
+	case BOOK:
+		b.IsBooked = true
+	default:
+		b.IsOwned = true
+	}
 }

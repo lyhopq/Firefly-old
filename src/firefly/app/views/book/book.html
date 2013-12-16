@@ -42,16 +42,21 @@
         {{end}}
         <a class="btn btn-primary" href="">推荐</a>
         {{if .IsBooked}}
-        <div class="btn btn-primary " id="unbook">
-            <i class="icon-white icon-ok"></i>
-            <a href="{{url "Book.Show" .Id}}">已经预借</a>
-        </div>
+            <button href="#" id="borrow" class="btn btn-primary btn-success booked">
+            <i class="icon-ok"></i>
+            <span>已经预借</span>
+            </button>
+        {{else}}{{if .IsOwned}}
+            <button href="#" id="borrow" class="btn btn-primary btn-success owned">
+            <i class="icon-ok"></i>
+            <span>已经借阅</span>
+            </button>
         {{else}}
-        <div class="btn btn-primary" id="book">
+            <button href="#" id="borrow" class="btn btn-primary unbooked">
             <i class="icon-plus"></i>
-            <a href="{{url "Book.Show" .Id}}">加入预借</a>
-        </div>
-        {{end}}
+            <span>加入预借</span>
+            </button>
+        {{end}}{{end}}
       </div>
     </li>
     </ul>

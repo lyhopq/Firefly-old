@@ -54,7 +54,14 @@ func (c *Book) Show(id int64) revel.Result {
 	user := c.connected()
 	collect := models.FindCollect(c.q, user.Id, id)
 	if user != nil && collect != nil {
-		book.SetCollected()
+		book.SetCollected(true)
+	} else {
+		book.SetCollected(false)
+	}
+
+	borrow := models.FindBorrow(c.q, user.Id, id)
+	if user != nil && borrow != nil {
+		book.SetBorrow(borrow.Status)
 	}
 
 	return c.Render(book)
@@ -79,8 +86,7 @@ func (c *Book) UnCollect(id int64) revel.Result {
 	var signin bool
 	if user != nil {
 		signin = true
-		collect := models.FindCollect(c.q, user.Id, id)
-		models.RemoveCollect(c.q, collect)
+		models.RemoveCollect(c.q, user.Id, id)
 
 		book := models.FindBookById(c.q, id)
 		book.SubCollect(c.q)
@@ -90,5 +96,21 @@ func (c *Book) UnCollect(id int64) revel.Result {
 }
 
 func (c *Book) Booking(id int64) revel.Result {
-	return nil
+	user := c.connected()
+	var ok bool
+	if user != nil {
+		ok = models.AddBooking(c.q, user.Id, id)
+	}
+
+	return c.RenderJson(ok)
+}
+
+func (c *Book) UnBooking(id int64) revel.Result {
+	user := c.connected()
+	var ok bool
+	if user != nil {
+		ok = models.RemoveBooking(c.q, user.Id, id)
+	}
+
+	return c.RenderJson(ok)
 }

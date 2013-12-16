@@ -16,7 +16,7 @@ type Collect struct {
 
 func FindCollect(q *qbs.Qbs, uid, bid int64) *Collect {
 	col := new(Collect)
-	err := q.WhereEqual("collect.User", uid).WhereEqual("collect.Book", bid).Find(col)
+	err := q.WhereEqual("user", uid).WhereEqual("book", bid).Find(col)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -32,6 +32,9 @@ func AddCollect(q *qbs.Qbs, uid, bid int64) {
 	q.Save(collect)
 }
 
-func RemoveCollect(q *qbs.Qbs, collect *Collect) {
-	q.Delete(collect)
+func RemoveCollect(q *qbs.Qbs, uid, bid int64) {
+	collect := FindCollect(q, uid, bid)
+	if collect != nil {
+		q.Delete(collect)
+	}
 }
