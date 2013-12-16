@@ -1,6 +1,10 @@
 package models
 
-import "fmt"
+import (
+	"strings"
+
+	"fmt"
+)
 
 const (
 	ItemsPerPage = 10 //每页几条记录
@@ -22,6 +26,14 @@ func NewPagination(page int, rows int, url string) *Pagination {
 	p.rows = rows
 	p.url = url
 	return &p
+}
+
+func GetPagination(page int, rows int64, url string) *Pagination {
+	if page < 1 {
+		page = 1
+	}
+	url = url[:strings.Index(url, "=")+1]
+	return NewPagination(page, int(rows), url)
 }
 
 func (p *Pagination) CurPage() int {

@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	BOOK = iota
-	OWN
-	DUE
+	BOOK   = iota // 预借
+	OWN           // 已借
+	DUE           // 超期
+	PRERET        // 预还
+	RETURN        // 已还
 )
 
 type Borrow struct {
@@ -62,4 +64,31 @@ func RemoveBooking(q *qbs.Qbs, uid, bid int64) (ok bool) {
 	}
 
 	return
+}
+
+func GetBorrows(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Borrow, int64) {
+	if page < 1 {
+		page = 1
+	}
+	page -= 1
+
+	var borrows []*Borrow
+	var rows int64
+	if column == "" {
+		rows = q.Count("borrow")
+		err := q.OrderByDesc(order).
+			Limit(ItemsPerPage).Offset(page * ItemsPerPage).FindAll(&borrows)
+		if err != nil {
+			fmt.Println(err)
+		}
+	} else {
+		rows = q.WhereEqual(column, value).Count("borrow")
+		err := q.WhereEqual(column, value).OrderByDesc(order).
+			Limit(ItemsPerPage).Offset(page * ItemsPerPage).FindAll(&borrows)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
+	return borrows, rows
 }

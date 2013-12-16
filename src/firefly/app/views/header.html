@@ -2,7 +2,7 @@
 
 <html>
   <head>
-	<title>Firefly</title>
+  <title>{{.title}}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,6 +70,7 @@
               <ul class="dropdown-menu">
                 <li class="first"><a href="">我的主页</a></li>
                 <li><a href="">个人资料设置</a></li>
+                <li><a href="{{url "User.Borrow"}}">借阅管理</a></li>
                 <li><a href="">我的收藏</a></li>
                 <li class="last"><a href="{{url "User.Signout"}}">退出</a></li>
               </ul>

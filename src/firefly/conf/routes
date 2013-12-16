@@ -7,6 +7,9 @@ module:testrunner
 GET     /                                       App.Index
 
 GET     /signin                                 User.Signin
+GET     /borrow                                 User.Borrow
+GET     /borrow/own                             User.Owned
+GET     /borrow/his                             User.BorrowHis
 
 GET     /book                                   Book.Index
 GET     /book/mr                                Book.MostRead

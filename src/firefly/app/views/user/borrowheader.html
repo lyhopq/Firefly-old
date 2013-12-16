@@ -1,0 +1,21 @@
+<div class="head">
+	<h3 class="pull-left">欢迎来到Firefly图书借阅室</h3>
+    <ul class="nav nav-tabs pull-right">
+	{{if eq .subActive "book"}}
+		<li class="active"><a href="javascript:;">已预借</a></li>
+	{{else}}
+    <li class=""><a href="{{url "User.Borrow"}}">已预借</a></li>
+	{{end}}
+	{{if eq .subActive "own"}}
+		<li class="active"><a href="javascript:;">已借阅</a></li>
+	{{else}}
+    <li><a href="{{url "User.Owned"}}">已借阅</a></li>
+	{{end}}
+	{{if eq .subActive "his"}}
+		<li class="active"><a href="javascript:;">借阅历史</a></li>
+	{{else}}
+    <li><a href="{{url "User.BorrowHis"}}">借阅历史</a></li>
+	{{end}}
+    </ul>
+</div>
+<div class="clearfix"></div>

@@ -48,14 +48,6 @@ func FindBookById(q *qbs.Qbs, id int64) *Book {
 	return book
 }
 
-func GetPagination(page int, rows int64, url string) *Pagination {
-	if page < 1 {
-		page = 1
-	}
-	url = url[:strings.Index(url, "=")+1]
-	return NewPagination(page, int(rows), url)
-}
-
 func GetBooks(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Book, int64) {
 	if page < 1 {
 		page = 1
@@ -132,7 +124,10 @@ func (b *Book) SetBorrow(status int) {
 	switch status {
 	case BOOK:
 		b.IsBooked = true
-	default:
+	case OWN, DUE:
 		b.IsOwned = true
+	default:
+		b.IsBooked = false
+		b.IsOwned = false
 	}
 }

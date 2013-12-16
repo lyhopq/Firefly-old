@@ -1,0 +1,10 @@
+<ul class="books unstyled reviews">
+{{range .borrows}}
+<li class="reviews">
+<p>{{.UserId}}</p>
+<p>{{.BookId}}</p>
+<p>{{.Status}}</p>
+<p>{{.Updated}}</p>
+</li>
+{{end}}
+</ul>

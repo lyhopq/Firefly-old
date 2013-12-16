@@ -3,6 +3,7 @@ package controllers
 import (
 	"firefly/app/models"
 	"firefly/app/routes"
+
 	"github.com/coocood/qbs"
 	"github.com/robfig/revel"
 )
@@ -91,6 +92,38 @@ func (c *User) Signout() revel.Result {
 	}
 
 	return c.Redirect(routes.App.Index())
+}
+
+func (c *User) Borrow(page int) revel.Result {
+	title := "已预借"
+	subActive := "book"
+
+	borrows, rows := models.GetBorrows(c.q, page, "status", models.BOOK, "id")
+	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+
+	return c.Render(title, subActive, borrows, pagination)
+}
+
+func (c *User) Owned(page int) revel.Result {
+	title := "已借阅"
+	subActive := "own"
+
+	borrows, rows := models.GetBorrows(c.q, page, "status", models.OWN, "id")
+	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+
+	c.Render(title, subActive, borrows, pagination)
+	return c.RenderTemplate("user/borrow.html")
+}
+
+func (c *User) BorrowHis(page int) revel.Result {
+	title := "借阅历史"
+	subActive := "his"
+
+	borrows, rows := models.GetBorrows(c.q, page, "", "", "id")
+	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+
+	c.Render(title, subActive, borrows, pagination)
+	return c.RenderTemplate("user/borrow.html")
 }
 
 //

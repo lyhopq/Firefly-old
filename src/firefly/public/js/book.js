@@ -1,16 +1,4 @@
 $(document).ready(function(){
-  $("#unbook").mouseover(function(event) {
-    $(this).removeClass("btn-success").addClass("btn-danger");
-    $(this).children("i").removeClass().addClass("icon-white icon-remove");
-    $(this).children("a").text("取消预借");
-  });
-  
-  $("#unbook").mouseout(function(event) {
-    $(this).removeClass("btn-danger").addClass("btn-success");
-    $(this).children("i").removeClass().addClass("icon-white icon-ok");
-    $(this).children("a").text("已经预借");
-  });
-
 	$("button#collect").unbind("click").click(function () {
         var button = $(this);
 		var id = $(".book").attr("id");
@@ -86,13 +74,13 @@ $(document).ready(function(){
         if($(this).hasClass("booked")) {
         $(this).removeClass("btn-success").addClass("btn-danger");
         $(this).children("i").removeClass().addClass("icon-white icon-remove");
-        $(this).children("span").text("取消预订");
+        $(this).children("span").text("取消预借");
         };
   }).mouseout(function(event) {
         if($(this).hasClass("booked")) {
         $(this).removeClass("btn-danger").addClass("btn-success");
         $(this).children("i").removeClass().addClass("icon-white icon-ok");
-        $(this).children("span").text("已经预订");
+        $(this).children("span").text("已经预借");
         };
   });
 });
