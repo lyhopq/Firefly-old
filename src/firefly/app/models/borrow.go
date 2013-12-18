@@ -20,7 +20,6 @@ type Borrow struct {
 	UserId int64 `qbs:"fk:User"`
 	User   *User
 	BookId int64 `qbs:"fk:Book"`
-
 	Book   *Book
 	Status int
 
@@ -29,7 +28,8 @@ type Borrow struct {
 
 func FindBorrow(q *qbs.Qbs, uid, bid int64) *Borrow {
 	bor := new(Borrow)
-	err := q.WhereEqual("user_id", uid).WhereEqual("book_id", bid).Find(bor)
+	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("book_id", bid)
+	err := q.Condition(condition).Find(bor)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -38,32 +38,51 @@ func FindBorrow(q *qbs.Qbs, uid, bid int64) *Borrow {
 	return bor
 }
 
-func AddBooking(q *qbs.Qbs, uid, bid int64) (ok bool) {
+func FindBorrowsByBookId(q *qbs.Qbs, bid int64) []*Borrow {
+	var borrows []*Borrow
+	err := q.WhereEqual("book_id", bid).FindAll(&borrows)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return borrows
+}
+
+func AddBooking(q *qbs.Qbs, uid, bid int64) bool {
+	book := FindBookById(q, bid)
+	if book.Existing != 0 {
+		book.Existing -= 1
+	} else {
+		return false
+	}
+
 	bor := new(Borrow)
 	bor.UserId = uid
 	bor.BookId = bid
 	bor.Status = BOOK
-	ok = true
 	if _, err := q.Save(bor); err != nil {
-		ok = false
+		return false
 	}
 
-	return
+	q.Save(book)
+
+	return true
 }
 
-func RemoveBooking(q *qbs.Qbs, uid, bid int64) (ok bool) {
+func RemoveBooking(q *qbs.Qbs, uid, bid int64) bool {
+	book := FindBookById(q, bid)
+	book.Existing += 1
+
 	bor := FindBorrow(q, uid, bid)
-	ok = true
-	if bor == nil {
-		ok = false
-		return
+	if bor != nil {
+		if _, err := q.Delete(bor); err != nil {
+			return false
+		}
+
+		q.Save(book)
 	}
 
-	if _, err := q.Delete(bor); err != nil {
-		ok = false
-	}
-
-	return
+	return true
 }
 
 func GetBorrows(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Borrow, int64) {

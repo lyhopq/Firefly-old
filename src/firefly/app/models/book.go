@@ -85,12 +85,7 @@ func (b *Book) CoverImgSrc() string {
 
 func (b *Book) AddHited(q *qbs.Qbs) {
 	b.Hited += 1
-	type Book struct {
-		Hited int64
-	}
-	book := new(Book)
-	book.Hited = b.Hited
-	q.WhereEqual("id", b.Id).Update(book)
+	q.Save(b)
 }
 
 func (b *Book) SetCollected(c bool) {
@@ -99,12 +94,7 @@ func (b *Book) SetCollected(c bool) {
 
 func (b *Book) AddCollect(q *qbs.Qbs) {
 	b.Collected += 1
-	type Book struct {
-		Collected int64
-	}
-	book := new(Book)
-	book.Collected = b.Collected
-	q.WhereEqual("id", b.Id).Update(book)
+	q.Save(b)
 }
 
 func (b *Book) SubCollect(q *qbs.Qbs) {
@@ -112,12 +102,7 @@ func (b *Book) SubCollect(q *qbs.Qbs) {
 	if b.Collected < 0 {
 		b.Collected = 0
 	}
-	type Book struct {
-		Collected int64
-	}
-	book := new(Book)
-	book.Collected = b.Collected
-	q.WhereEqual("id", b.Id).Update(book)
+	q.Save(b)
 }
 
 func (b *Book) SetBorrow(status int) {

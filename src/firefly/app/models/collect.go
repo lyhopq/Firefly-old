@@ -7,16 +7,17 @@ import (
 )
 
 type Collect struct {
-	Id   int64
-	User int64
-	Book int64
+	Id     int64
+	UserId int64
+	BookId int64
 
 	Time time.Time
 }
 
 func FindCollect(q *qbs.Qbs, uid, bid int64) *Collect {
 	col := new(Collect)
-	err := q.WhereEqual("user", uid).WhereEqual("book", bid).Find(col)
+	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("book_id", bid)
+	err := q.Condition(condition).Find(col)
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -27,8 +28,8 @@ func FindCollect(q *qbs.Qbs, uid, bid int64) *Collect {
 
 func AddCollect(q *qbs.Qbs, uid, bid int64) {
 	collect := new(Collect)
-	collect.User = uid
-	collect.Book = bid
+	collect.UserId = uid
+	collect.BookId = bid
 	q.Save(collect)
 }
 

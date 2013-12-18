@@ -196,6 +196,21 @@ ul ul, ul ol, ol ol, ol ul, ul {
   padding-bottom: 8px;
 }
 
+
+
+/*
+.box {
+  padding: 10px;
+  margin: 0 0 20px 0;
+  background-color: #fff;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -moz-box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  border-bottom: 2px solid #e2e2e9;
+}
+*/
+
 .navbar-search .search-query:focus, .navbar-search .search-query.focused {
   padding: 5px 10px;
   color: #333333;
@@ -383,105 +398,94 @@ ul.books li {
 }
 */
 .reviews {
-margin: 0;
-width: 100%;
+  margin: 10px;
+  width: 100%;
 }
 .reviews li {
-margin-bottom: 50px;
-min-height: 120px;
-background-image: url("/public/img/bg_item.png");
-background-position: 0 bottom;
-background-repeat: repeat-x;
+  margin-bottom: 20px;
+  min-height: 120px;
+  background-image: url("/public/img/bg_item.png");
+  background-position: 0 bottom;
+  background-repeat: repeat-x;
 }
 .reviews li .cover {
-margin-right: 15px;
+  margin-right: 15px;
 }
 .reviews li .cover img {
-height: 102.39999999999999px;
-width: 76.8px;
+  width: 80px;
 }
 .reviews li .info {
   width:500px;
 }
 
 .reviews li .info .header h5 {
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-word-break: break-all;
-margin-top: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: break-all;
+  margin-top: 0;
 }
 
 .reviews li .info .body .feedback {
-color: #9A9C98;
-height: 16px;
-line-height: 16px;
+  color: #9A9C98;
+  height: 16px;
+  line-height: 16px;
 }
-.reviews li .info .body .feedback span.eye {
-padding-left: 20px;
-}
+
 .reviews li .info .body .feedback span {
-color: #81b38a;
-padding: 0 6px;
+  color: #81b38a;
+  padding: 0 6px;
 }
 span.eye {
-background: url(/public/img/Eye.png) no-repeat;
-padding-left: 20px;
+  background: url(/public/img/Eye.png) no-repeat;
+  padding-left: 20px;
 }
+
 span.divider {
-color: #81b38a;
-padding: 0 6px 0 4px;
+  color: #81b38a;
+  padding: 0 6px 0 4px;
 }
+
 span.thumbsup {
-background: url(/public/img/ThumbsUp.png) no-repeat;
-padding-left: 20px;
+  background: url(/public/img/ThumbsUp.png) no-repeat;
+  padding-left: 20px;
 }
+
 span.chat {
-background: url(/public/img/Chat.png) no-repeat;
-padding-left: 20px;
+  background: url(/public/img/Chat.png) no-repeat;
+  padding-left: 20px;
 }
 
 .book-meta {
-margin-top: 8px;
+  margin-top: 8px;
 }
 .book-meta p {
-margin-bottom: 0;
+  margin-bottom: 0;
 }
 .book-meta p {
-line-height: 1.5;
+  line-height: 1.5;
 }
 
 .book-meta .label, .labeled-text a, .labeled-text .plain {
-margin-right: 5px;
+  margin-right: 5px;
 }
 .book-meta .label {
-color: #666;
-margin-right: 1em;
-text-shadow:none;
-background:none;
+  color: #666;
+  margin-right: 1em;
+  text-shadow:none;
+  background:none;
 }
 
 .head h3 {
-font-size: 20px;
+  font-size: 20px;
 }
 .inner {
-padding: 10px;
-font-size: 12px;
-line-height: 150%;
-text-align: left;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: left;
 }
-table[Attributes Style] {
-border-spacing: 0px;
-border-top-width: 0px;
-border-right-width: 0px;
-border-bottom-width: 0px;
-border-left-width: 0px;
-width: 100%;
-}
-td[Attributes Style] {
-width: 120px;
-text-align: -webkit-left;
-}
+
 .fade {
 color: #ccc;
 opacity: 100;
@@ -512,9 +516,4 @@ border-radius: 3px;
 font-size: 12px;
 line-height: 12px;
 outline: none;
-}
-
-.btn a {
-  color: #fff;
-  text-decoration: none;
 }

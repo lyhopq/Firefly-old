@@ -1,5 +1,18 @@
 $(document).ready(function(){
+    var user =$('#user_menu'); 
+    var isLogin;
+    if(user.length > 0) {
+        isLogin = true;
+    } else {
+        isLogin = false;
+    }
+
 	$("button#collect").unbind("click").click(function () {
+        if(!isLogin) {
+            alert("请先登录，谢谢！");
+            return;
+        }
+
         var button = $(this);
 		var id = $(".book").attr("id");
         var feed = $(".feedback>#collect")
@@ -10,10 +23,8 @@ $(document).ready(function(){
                     button.children("i").removeClass().addClass("icon-remove");
                     button.children("span").text("取消收藏");
                     feed.text(parseInt(feed.text())+1);
-                } else {
-                    alert("请先登录，谢谢！");
-                };
-		    	});
+                } 
+                });
         } else {
 		    $.getJSON(id + '/uncollect', function(data) {
                 if(data) {
@@ -21,9 +32,7 @@ $(document).ready(function(){
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入收藏");
                     feed.text(parseInt(feed.text())-1);
-                } else {
-                    alert("请先登录，谢谢！");
-                };
+                } 
 		    	});
 
             };
@@ -43,6 +52,11 @@ $(document).ready(function(){
 
 
 	$("button#borrow").unbind("click").click(function () {
+        if(!isLogin) {
+            alert("请先登录，谢谢！");
+            return;
+        }
+
         var button = $(this);
 		var id = $(".book").attr("id");
         var message = $("#user_message_count>span");
@@ -54,7 +68,7 @@ $(document).ready(function(){
                     button.children("span").text("取消预借");
                     message.text(parseInt(message.text())+1);
                 } else {
-                    alert("请先登录，谢谢！");
+                    alert("该书已经被借完了！");
                 };
 		    	});
         } else if(button.hasClass("booked")) {
@@ -64,11 +78,8 @@ $(document).ready(function(){
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入预借");
                     message.text(parseInt(message.text())-1);
-                } else {
-                    alert("请先登录，谢谢！");
-                };
-		    	});
-
+		    	};
+            })
             };
 	}).mouseover(function(event) {
         if($(this).hasClass("booked")) {

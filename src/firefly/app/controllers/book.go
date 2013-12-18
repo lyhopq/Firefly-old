@@ -52,19 +52,23 @@ func (c *Book) Show(id int64) revel.Result {
 
 	book.AddHited(c.q)
 	user := c.connected()
-	collect := models.FindCollect(c.q, user.Id, id)
-	if user != nil && collect != nil {
-		book.SetCollected(true)
-	} else {
-		book.SetCollected(false)
+	if user != nil {
+		collect := models.FindCollect(c.q, user.Id, id)
+		if collect != nil {
+			book.SetCollected(true)
+		} else {
+			book.SetCollected(false)
+		}
+
+		borrow := models.FindBorrow(c.q, user.Id, id)
+		if borrow != nil {
+			book.SetBorrow(borrow.Status)
+		}
 	}
 
-	borrow := models.FindBorrow(c.q, user.Id, id)
-	if user != nil && borrow != nil {
-		book.SetBorrow(borrow.Status)
-	}
+	borrows := models.FindBorrowsByBookId(c.q, id)
 
-	return c.Render(book)
+	return c.Render(book, borrows)
 }
 
 func (c *Book) Collect(id int64) revel.Result {
