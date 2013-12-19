@@ -3,7 +3,7 @@ package controllers
 import (
 	"firefly/app/models"
 	"firefly/app/routes"
-
+	"fmt"
 	"github.com/coocood/qbs"
 	"github.com/robfig/revel"
 )
@@ -98,10 +98,10 @@ func (c *User) Borrow(page int) revel.Result {
 	title := "已预借"
 	subActive := "book"
 
-	borrows, rows := models.GetBorrows(c.q, page, "status", models.BOOK, "id")
-	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+	borrows, total := models.GetBorrows(c.q, page, "status", models.BOOK, "id")
+	pagination := models.GetPagination(page, total, routes.User.Borrow(page))
 
-	return c.Render(title, subActive, borrows, pagination)
+	return c.Render(title, subActive, borrows, total, pagination)
 }
 
 func (c *User) Owned(page int) revel.Result {
@@ -124,6 +124,20 @@ func (c *User) BorrowHis(page int) revel.Result {
 
 	c.Render(title, subActive, borrows, pagination)
 	return c.RenderTemplate("user/borrow.html")
+}
+
+func (c *User) BookDel(id int64) revel.Result {
+	bor := models.FindBorrowById(c.q, id)
+	fmt.Println(bor, id)
+	var ok bool
+	if bor != nil {
+		_, err := c.q.Delete(bor)
+		if err == nil {
+			ok = true
+		}
+	}
+
+	return c.RenderJson(ok)
 }
 
 //

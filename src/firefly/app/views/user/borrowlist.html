@@ -1,10 +1,29 @@
 <ul class="books unstyled reviews">
-{{range .borrows}}
-<li class="reviews">
-<p>{{.UserId}}</p>
-<p>{{.BookId}}</p>
-<p>{{.Status}}</p>
-<p>{{.Updated}}</p>
-</li>
-{{end}}
+	<div class="content">
+        {{if eq .total 0}}
+		<h2>你还没有预借！</h2>
+        {{else}}
+		<h2>预借图书：{{.total}} 本</h2>
+		<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>书名</th>
+				<th>预借时间</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		{{range .borrows}}
+			<tr>
+				<td>{{.Book.Title}}</td>
+				<td>{{datetime .Updated}}</td>
+				<td>
+					<button href="#" class="btn btn-mini btn-danger remove" id="{{.Id}}"><i class="icon-remove icon-white"></i> 删除</button>
+				</td>
+			</tr>
+		{{end}}
+		</tbody>
+		</table>
+        {{end}}
+	</div>
 </ul>

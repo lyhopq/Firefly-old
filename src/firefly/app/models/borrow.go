@@ -26,6 +26,17 @@ type Borrow struct {
 	Updated time.Time
 }
 
+func FindBorrowById(q *qbs.Qbs, id int64) *Borrow {
+	bor := new(Borrow)
+	err := q.WhereEqual("borrow.id", id).Find(bor)
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return bor
+}
+
 func FindBorrow(q *qbs.Qbs, uid, bid int64) *Borrow {
 	bor := new(Borrow)
 	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("book_id", bid)
