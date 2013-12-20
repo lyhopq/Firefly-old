@@ -105,6 +105,22 @@ func (b *Book) SubCollect(q *qbs.Qbs) {
 	q.Save(b)
 }
 
+func (b *Book) SubExisting(q *qbs.Qbs) {
+	b.Existing -= 1
+	if b.Existing < 0 {
+		b.Existing = 0
+	}
+	q.Save(b)
+}
+
+func (b *Book) AddExisting(q *qbs.Qbs) {
+	b.Existing += 1
+	if b.Existing > b.Holding {
+		b.Existing = b.Holding
+	}
+	q.Save(b)
+}
+
 func (b *Book) SetBorrow(status int) {
 	switch status {
 	case BOOK:

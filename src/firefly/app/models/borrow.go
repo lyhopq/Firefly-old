@@ -122,3 +122,46 @@ func GetBorrows(q *qbs.Qbs, page int, column string, value interface{}, order st
 
 	return borrows, rows
 }
+
+func userBorrows(q *qbs.Qbs, page int, uid int64, con *qbs.Condition) ([]*Borrow, int64) {
+	if page < 1 {
+		page = 1
+	}
+	page -= 1
+
+	var borrows []*Borrow
+	var rows int64
+	rows = q.Condition(con).Count("borrow")
+	err := q.Condition(con).Limit(ItemsPerPage).
+		Offset(page * ItemsPerPage).FindAll(&borrows)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return borrows, rows
+
+}
+
+func UserBook(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
+	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("status", BOOK)
+	return userBorrows(q, page, uid, condition)
+}
+
+func UserOwn(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
+	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("status", OWN)
+	return userBorrows(q, page, uid, condition)
+}
+
+func UserHis(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
+	condition := qbs.NewEqualCondition("book_id", uid)
+	condition1 := qbs.NewCondition("status > ?", BOOK)
+	condition.AndCondition(condition1)
+	return userBorrows(q, page, uid, condition)
+}
+
+func (b *Borrow) SetBorrowStatus(q *qbs.Qbs, st int) error {
+	b.Status = st
+	_, err := q.Save(b)
+
+	return err
+}

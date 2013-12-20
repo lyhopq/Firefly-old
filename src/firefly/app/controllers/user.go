@@ -98,40 +98,68 @@ func (c *User) Borrow(page int) revel.Result {
 	title := "已预借"
 	subActive := "book"
 
-	borrows, total := models.GetBorrows(c.q, page, "status", models.BOOK, "id")
-	pagination := models.GetPagination(page, total, routes.User.Borrow(page))
+	user := c.connected()
+	if user != nil {
+		borrows, total := models.UserBook(c.q, page, user.Id)
+		pagination := models.GetPagination(page, total, routes.User.Borrow(page))
 
-	return c.Render(title, subActive, borrows, total, pagination)
+		return c.Render(title, subActive, borrows, total, pagination)
+	}
+
+	var error string
+	error = "请先登录，谢谢"
+	return c.Render(title, subActive, error)
 }
 
 func (c *User) Owned(page int) revel.Result {
 	title := "已借阅"
 	subActive := "own"
 
-	borrows, rows := models.GetBorrows(c.q, page, "status", models.OWN, "id")
-	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+	user := c.connected()
+	if user != nil {
+		borrows, total := models.UserOwn(c.q, page, user.Id)
+		pagination := models.GetPagination(page, total, routes.User.Borrow(page))
 
-	c.Render(title, subActive, borrows, pagination)
-	return c.RenderTemplate("user/borrow.html")
+		c.Render(title, subActive, borrows, total, pagination)
+		return c.RenderTemplate("user/borrow.html")
+	}
+
+	var error string
+	error = "请先登录，谢谢"
+	return c.Render(title, subActive, error)
 }
 
 func (c *User) BorrowHis(page int) revel.Result {
 	title := "借阅历史"
 	subActive := "his"
 
-	borrows, rows := models.GetBorrows(c.q, page, "", "", "id")
-	pagination := models.GetPagination(page, rows, routes.User.Borrow(page))
+	borrows, total := models.UserHis(c.q, page, 1)
+	pagination := models.GetPagination(page, total, routes.User.Borrow(page))
 
-	c.Render(title, subActive, borrows, pagination)
+	c.Render(title, subActive, borrows, total, pagination)
 	return c.RenderTemplate("user/borrow.html")
 }
 
 func (c *User) BookDel(id int64) revel.Result {
 	bor := models.FindBorrowById(c.q, id)
-	fmt.Println(bor, id)
 	var ok bool
 	if bor != nil {
 		_, err := c.q.Delete(bor)
+		if err == nil {
+			bor.Book.AddExisting(c.q)
+			ok = true
+		}
+	}
+
+	return c.RenderJson(ok)
+}
+
+func (c *User) BookReturn(id int64) revel.Result {
+	bor := models.FindBorrowById(c.q, id)
+	fmt.Println(bor, id)
+	var ok bool
+	if bor != nil {
+		err := bor.SetBorrowStatus(c.q, models.PRERET)
 		if err == nil {
 			ok = true
 		}

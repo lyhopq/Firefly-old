@@ -11,6 +11,7 @@ GET     /borrow                                 User.Borrow
 GET     /borrow/own                             User.Owned
 GET     /borrow/his                             User.BorrowHis
 GET     /book/:id/delete                        User.BookDel
+GET     /book/:id/return                        User.BookReturn
 
 GET     /book                                   Book.Index
 GET     /book/mr                                Book.MostRead
