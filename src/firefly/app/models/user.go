@@ -12,14 +12,13 @@ import (
 
 type User struct {
 	Id              int64
-	Name            string      `qbs:"size:32,unique,notnull"`
-	Email           string      `qbs:"size:32,unique,notnull"`
-	Password        string      `qbs:"-"`
-	ConfirmPassword string      `qbs:"-"`
-	HashedPassword  string      `qbs:"size:32"`
-	Type            int         `qbs:"default:2"` //1管理员，2普通用户
-	Avatar          string      `qbs:"size:255"`
-	Permissions     map[int]int `qbs:"-"`
+	Name            string `qbs:"size:32,unique,notnull"`
+	Email           string `qbs:"size:32,unique,notnull"`
+	Password        string `qbs:"-"`
+	ConfirmPassword string `qbs:"-"`
+	HashedPassword  string `qbs:"size:32"`
+	Type            int    `qbs:"default:2"` //1管理员，2普通用户
+	Avatar          string `qbs:"size:255"`
 	//ValidateCode    string      `qbs:"size:255"`
 	//IsActive        bool
 	//Created         time.Time
@@ -85,21 +84,6 @@ func (u *User) Save(q *qbs.Qbs) bool {
 		return false
 	}
 	return true
-}
-
-func (u *User) GetPermissions(q *qbs.Qbs) map[int]int {
-	if u.Permissions == nil {
-		u.Permissions = make(map[int]int)
-		var permissions []*Permissions
-
-		q.WhereEqual("user_id", u.Id).FindAll(&permissions)
-
-		for _, perm := range permissions {
-			u.Permissions[perm.Perm] = perm.Perm
-		}
-	}
-
-	return u.Permissions
 }
 
 func (u *User) IsAdmin() bool {
