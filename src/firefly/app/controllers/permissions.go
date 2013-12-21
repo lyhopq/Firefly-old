@@ -17,7 +17,18 @@ var Permissions = map[string]int{
 	"Admin.EditCategory":   AdminGroup,
 
 	// User
-	"User.Edit": MemberGroup,
+	"User.Edit":       MemberGroup,
+	"User.Borrow":     MemberGroup,
+	"User.Owned":      MemberGroup,
+	"User.BorrowHis":  MemberGroup,
+	"User.BookDel":    MemberGroup,
+	"User.BookReturn": MemberGroup,
+
+	// Book
+	"Book.Collect":   MemberGroup,
+	"Book.UnCollect": MemberGroup,
+	"Book.Booking":   MemberGroup,
+	"Book.UnBooking": MemberGroup,
 
 	// Topic
 	"Topic.New":   MemberGroup,

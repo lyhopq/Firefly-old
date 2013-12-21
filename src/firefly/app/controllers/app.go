@@ -29,9 +29,7 @@ func (c *Application) inject() revel.Result {
 			c.Session["preUrl"] = c.Request.Request.URL.String()
 			return c.Redirect(routes.User.Signin())
 		} else {
-			perm := user.GetPermissions(c.q)
-			_, ok := perm[value]
-			if !ok {
+			if value != user.Type {
 				return c.Forbidden("抱歉，您没有得到授权！")
 			}
 		}
