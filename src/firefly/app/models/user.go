@@ -8,12 +8,13 @@ import (
 	"io"
 	"regexp"
 	"strings"
+	"time"
 )
 
 type User struct {
-	Id              int64
-	Name            string `qbs:"size:32,unique,notnull"`
-	Email           string `qbs:"size:32,unique,notnull"`
+	Id   int64
+	Name string `qbs:"size:32,unique,notnull"`
+	//Email           string `qbs:"size:32,unique,notnull"`
 	Password        string `qbs:"-"`
 	ConfirmPassword string `qbs:"-"`
 	HashedPassword  string `qbs:"size:32"`
@@ -21,7 +22,7 @@ type User struct {
 	Avatar          string `qbs:"size:255"`
 	//ValidateCode    string      `qbs:"size:255"`
 	//IsActive        bool
-	//Created         time.Time
+	Created time.Time
 	//Updated         time.Time
 }
 
@@ -59,12 +60,14 @@ func (u *User) HasName(q *qbs.Qbs) bool {
 
 }
 
+/*
 func (u *User) HasEmail(q *qbs.Qbs) bool {
 	user := new(User)
 	q.WhereEqual("email", u.Email).Find(user)
 
 	return user.Id > 0
 }
+*/
 
 // 加密密码,转成md5
 func EncryptPassword(password string) string {

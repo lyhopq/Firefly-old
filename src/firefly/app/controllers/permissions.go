@@ -8,13 +8,13 @@ const (
 
 var Permissions = map[string]int{
 	// Admin
-	"Admin.Index":          AdminGroup,
-	"Admin.ListUser":       AdminGroup,
-	"Admin.DeleteUser":     AdminGroup,
-	"Admin.ListCategory":   AdminGroup,
-	"Admin.DeleteCategory": AdminGroup,
-	"Admin.NewCategory":    AdminGroup,
-	"Admin.EditCategory":   AdminGroup,
+	"Admin.Index":      AdminGroup,
+	"Admin.ListUser":   AdminGroup,
+	"Admin.DeleteUser": AdminGroup,
+	"Admin.ListBook":   AdminGroup,
+	"Admin.DeleteBook": AdminGroup,
+	"Admin.NewBook":    AdminGroup,
+	"Admin.EditBook":   AdminGroup,
 
 	// User
 	"User.Edit":       MemberGroup,

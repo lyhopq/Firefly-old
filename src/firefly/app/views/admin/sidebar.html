@@ -1,0 +1,21 @@
+<div class="well sidebar-nav">
+	<ul class="nav nav-list">
+		<li class="nav-header"><i class="icon-user"></i></li>
+		<li {{if eq .title "用户列表"}}class="active"{{end}}>
+			<a href="{{url "Admin.ListUser"}}">用户列表</a></li>
+
+        <li class="nav-header"><i class="icon-folder-open"></i></li>
+		<li {{if eq .title "添加图书"}}class="active"{{end}}>
+        <a href="{{url "Admin.NewBook"}}">添加图书</a></li>
+		<li {{if eq .title "图书列表"}}class="active"{{end}}>
+            <a href="{{url "Admin.ListBook"}}">图书列表</a></li>
+
+		<li class="nav-header"><i class="icon-th-list"></i></li>
+		<li {{if eq .title "新建分类"}}class="active"{{end}}>
+			<a href="">新建分类</a></li>
+		<li {{if eq .title "分类列表"}}class="active"{{end}}>
+			<a href="">分类列表</a></li>
+
+
+	</ul>
+</div>

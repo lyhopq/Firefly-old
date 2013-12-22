@@ -13,6 +13,14 @@ GET     /borrow/his                             User.BorrowHis
 GET     /book/:id/delete                        User.BookDel
 GET     /book/:id/return                        User.BookReturn
 
+GET     /admin                                  Admin.Index
+GET     /admin/users                            Admin.ListUser
+GET     /admin/user/:id/delete                  Admin.DeleteUser
+GET     /admin/books                            Admin.ListBook
+GET     /admin/book/new                         Admin.NewBook
+GET     /admin/book/:id/edit                    Admin.EditBook
+GET     /admin/book/:id/delete                  Admin.DeleteBook
+
 GET     /book                                   Book.Index
 GET     /book/mr                                Book.MostRead
 GET     /book/mc                                Book.MostComment
@@ -22,6 +30,8 @@ GET     /book/:id/uncollect                     Book.UnCollect
 GET     /book/:id/booking                       Book.Booking
 GET     /book/:id/unbooking                     Book.UnBooking
 #GET     /book/b/:id                               Book.Booking
+
+
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

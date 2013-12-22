@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 	"github.com/coocood/qbs"
+	"github.com/robfig/revel"
 	"strings"
 	"time"
 )
@@ -131,4 +132,40 @@ func (b *Book) SetBorrow(status int) {
 		b.IsBooked = false
 		b.IsOwned = false
 	}
+}
+
+func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
+	valid := v.Required(b.Title).Message("请输入书名")
+	if valid.Ok {
+		if b.HasName(q) {
+			err := &revel.ValidationError{
+				Message: "该书已存在",
+				Key:     "book.Title",
+			}
+			valid.Error = err
+			valid.Ok = false
+
+			v.Errors = append(v.Errors, err)
+		}
+	}
+
+	v.Required(b.Author).Message("请输入作者")
+	v.Required(b.Holding).Message("请输入馆藏数量")
+}
+
+func (b *Book) HasName(q *qbs.Qbs) bool {
+	book := new(Book)
+	condition := qbs.NewCondition("title= ?", b.Title)
+	q.Condition(condition).Find(book)
+
+	return book.Id > 0
+}
+
+func (b *Book) Save(q *qbs.Qbs) bool {
+	_, err := q.Save(b)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
 }

@@ -60,19 +60,19 @@
             <li>
               <a href="" id="user_message_count"><span class="badge badge-warning">0</span></a>
             </li>
-            {{if .user.IsAdmin}}
-            <li>
-              <a href="">管理后台</a>
-            </li>
-            {{end}}
             <li class="dropdown" id="user_menu">
               <a href="#user_menu" class="dropdown-toggle" data-toggle="dropdown">{{.user.Name}} <b class="caret"></b></a>
               <ul class="dropdown-menu">
+                {{if .user.IsAdmin}}
+                <li><a href="{{url "Admin.Index"}}">后台管理</a></li>
+                <li class="last"><a href="{{url "User.Signout"}}">退出</a></li>
+                {{else}}
                 <li class="first"><a href="">我的主页</a></li>
                 <li><a href="">个人资料设置</a></li>
                 <li><a href="{{url "User.Borrow"}}">借阅管理</a></li>
                 <li><a href="">我的收藏</a></li>
                 <li class="last"><a href="{{url "User.Signout"}}">退出</a></li>
+                {{end}}
               </ul>
             </li>
             {{else}}

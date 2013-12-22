@@ -1,0 +1,134 @@
+{{template "admin/header.html" .}}
+
+<div class="row-fluid">
+	<div class="span3">
+	{{template "admin/sidebar.html" .}}
+	</div><!--/span-->
+
+	<div class="span9">
+		{{template "flash.html" .}}
+		<div class="page-header">
+			<h3>{{.title}}</h3>
+		</div>
+		{{$book := .book}}
+		<form action="{{if $book}}{{url "Admin.EditBookPost" $book.Id}}{{else}}{{url "Admin.NewBookPost"}}{{end}}" method="POST" class="form-horizontal">
+			<input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+			{{with $field := field "book.Title" .}}
+			<div class="control-group">
+				<label class="required control-label" for="{{$field.Name}}"><abbr title="required">*</abbr>书名</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Title}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Author" .}}
+			<div class="control-group">
+				<label class="required control-label" for="{{$field.Name}}"><abbr title="required">*</abbr>作者</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Author}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Translator" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">译者</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Translator}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Publisher" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">出版社</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Publisher}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.PublicationDate" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">出版日期</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{date $book.PublicationDate}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Pages" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">页数</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Pages}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Language" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">语言</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Language}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Isbn" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">ISBN</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Isbn}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Holding" .}}
+			<div class="control-group">
+				<label class="required control-label" for="{{$field.Name}}"><abbr title="required">*</abbr>馆藏</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Holding}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			{{with $field := field "book.Introduction" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">说明</label>
+				<div class="controls">
+					<textarea name="{{$field.Name}}" rows="4" class="span8">{{if $book}}{{$book.Introduction}}{{else}}{{$field.Flash}}{{end}}</textarea>
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
+			<div class="control-group">
+				<div class="controls">
+					<button type="submit" class="btn btn-primary">提交图书</button>
+				</div>
+			</div>
+		</form>
+	</div><!--/span-->
+
+</div><!--/row-->
+{{template "admin/footer.html" .}}

@@ -29,6 +29,7 @@ var (
 		"gopher_strawberry.jpg",
 	}
 	defaultAvatar = avatars[0]
+	defaultCover  = "bookdefault.jpg"
 
 	basePath   string = ""
 	uploadPath string = ""

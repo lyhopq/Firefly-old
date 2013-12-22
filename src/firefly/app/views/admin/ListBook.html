@@ -1,0 +1,60 @@
+{{set . "title" "图书列表"}}
+{{template "admin/header.html" .}}
+
+<div class="row-fluid">
+	<div class="span3">
+	{{template "admin/sidebar.html" .}}
+	</div><!--/span-->
+
+	<div class="span9">
+		{{template "flash.html" .}}
+		<div class="page-header">
+			<h3>{{.title}}</h3>
+		</div>
+
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>书名</th>
+					<th>状态</th>
+					<th>操作</th>
+				</tr>
+			 </thead>
+			{{range .books}}
+				<tr id="{{.Id}}">
+					<td>{{.Id}}</td>
+					<td>{{.Title}}</td>
+                    <td>馆藏：{{.Holding}} 剩余：{{.Existing}} <a href="">借阅详情</a></td>
+					<td>
+						<a href="{{url "Admin.EditBook" .Id}}" class="btn btn-mini btn-info"><i class="icon-edit icon-white"></i> 编辑</a>
+						<button href="#" class="btn btn-mini btn-danger remove" id="{{.Id}}"><i class="icon-remove icon-white"></i> 删除</button>
+					</td>
+				</tr>
+			{{end}}
+		</table>
+	</div><!--/span-->
+    {{template "pagination.html" .}}
+</div><!--/row-->
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var id, button;
+	$("button.remove").click(function () {
+		if (confirm("确定删除吗?")) {
+			var id = $(this).attr("id");
+
+			console.log('book/'+ id + '/delete')
+			$.getJSON('book/'+ id + '/delete', function(data) {
+				if (data) {
+					$("tr#" + id).fadeOut("slow", function () {
+						$("tr#" + id).remove();
+					});
+				};
+			});
+		};
+	});
+});
+</script>
+
+{{template "admin/footer.html" .}}
