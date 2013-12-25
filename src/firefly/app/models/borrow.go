@@ -153,7 +153,7 @@ func UserOwn(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
 }
 
 func UserHis(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
-	condition := qbs.NewEqualCondition("book_id", uid)
+	condition := qbs.NewEqualCondition("user_id", uid)
 	condition1 := qbs.NewCondition("status > ?", BOOK)
 	condition.AndCondition(condition1)
 	return userBorrows(q, page, uid, condition)

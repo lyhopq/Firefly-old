@@ -33,7 +33,7 @@ func (c *Admin) DeleteUser(id int64) revel.Result {
 func (c *Admin) ListBook(page int) revel.Result {
 	title := "图书列表"
 	books, rows := models.GetBooks(c.q, page, "", "", "id")
-	pagination := models.GetPagination(page, rows, routes.Book.Index(page))
+	pagination := models.GetPagination(page, rows, routes.Admin.ListBook(page))
 
 	return c.Render(title, books, pagination)
 }
@@ -95,6 +95,36 @@ func (c *Admin) DeleteBook(id int64) revel.Result {
 	book := new(models.Book)
 	book.Id = id
 	c.q.Delete(book)
+
+	return c.RenderJson([]byte("true"))
+}
+
+func (c *Admin) ListBorrow(page int) revel.Result {
+	title := "借阅请求"
+	borrows, rows := models.GetBorrows(c.q, page, "status", models.BOOK, "id")
+	pagination := models.GetPagination(page, rows, routes.Admin.ListBorrow(page))
+
+	return c.Render(title, borrows, pagination)
+}
+
+func (c *Admin) ListReturn(page int) revel.Result {
+	title := "归还请求"
+	borrows, rows := models.GetBorrows(c.q, page, "status", models.PRERET, "id")
+	pagination := models.GetPagination(page, rows, routes.Admin.ListBorrow(page))
+
+	return c.Render(title, borrows, pagination)
+}
+
+func (c *Admin) ConfirmBorrow(id int64) revel.Result {
+	borrow := models.FindBorrowById(c.q, id)
+	borrow.SetBorrowStatus(c.q, models.OWN)
+
+	return c.RenderJson([]byte("true"))
+}
+
+func (c *Admin) DeleteBorrow(id int64) revel.Result {
+	borrow := models.FindBorrowById(c.q, id)
+	c.q.Delete(borrow)
 
 	return c.RenderJson([]byte("true"))
 }

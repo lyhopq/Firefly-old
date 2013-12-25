@@ -118,7 +118,7 @@ func (c *User) Owned(page int) revel.Result {
 	user := c.connected()
 	if user != nil {
 		borrows, total := models.UserOwn(c.q, page, user.Id)
-		pagination := models.GetPagination(page, total, routes.User.Borrow(page))
+		pagination := models.GetPagination(page, total, routes.User.Owned(page))
 
 		c.Render(title, subActive, borrows, total, pagination)
 		return c.RenderTemplate("user/borrow.html")
@@ -133,8 +133,9 @@ func (c *User) BorrowHis(page int) revel.Result {
 	title := "借阅历史"
 	subActive := "his"
 
-	borrows, total := models.UserHis(c.q, page, 1)
-	pagination := models.GetPagination(page, total, routes.User.Borrow(page))
+	user := c.connected()
+	borrows, total := models.UserHis(c.q, page, user.Id)
+	pagination := models.GetPagination(page, total, routes.User.BorrowHis(page))
 
 	c.Render(title, subActive, borrows, total, pagination)
 	return c.RenderTemplate("user/borrow.html")
