@@ -169,3 +169,7 @@ func (b *Book) Save(q *qbs.Qbs) bool {
 	}
 	return true
 }
+
+func (b *Book) Has() bool {
+	return b.Existing > 0
+}

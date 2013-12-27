@@ -8,11 +8,12 @@ import (
 )
 
 const (
-	BOOK   = iota // 预借
-	OWN           // 已借
-	DUE           // 超期
-	PRERET        // 预还
-	RETURN        // 已还
+	NOTBORROW = iota
+	BOOK      // 预借
+	OWN       // 已借
+	DUE       // 超期
+	PRERET    // 预还
+	RETURN    // 已还
 )
 
 type Borrow struct {
@@ -38,16 +39,15 @@ func FindBorrowById(q *qbs.Qbs, id int64) *Borrow {
 	return bor
 }
 
-func FindBorrow(q *qbs.Qbs, uid, bid int64) *Borrow {
-	bor := new(Borrow)
+func FindBorrow(q *qbs.Qbs, uid, bid int64) []*Borrow {
+	var borrows []*Borrow
 	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("book_id", bid)
-	err := q.Condition(condition).Find(bor)
+	err := q.Condition(condition).FindAll(&borrows)
 	if err != nil {
 		fmt.Println(err)
-		return nil
 	}
 
-	return bor
+	return borrows
 }
 
 func FindBorrowsByBookId(q *qbs.Qbs, bid int64) []*Borrow {

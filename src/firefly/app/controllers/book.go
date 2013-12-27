@@ -4,6 +4,7 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 
+	"fmt"
 	"github.com/robfig/revel"
 )
 
@@ -52,6 +53,7 @@ func (c *Book) Show(id int64) revel.Result {
 
 	book.AddHited(c.q)
 	user := c.connected()
+	var borrows []*models.Borrow
 	if user != nil {
 		collect := models.FindCollect(c.q, user.Id, id)
 		if collect != nil {
@@ -60,13 +62,21 @@ func (c *Book) Show(id int64) revel.Result {
 			book.SetCollected(false)
 		}
 
-		borrow := models.FindBorrow(c.q, user.Id, id)
-		if borrow != nil {
-			book.SetBorrow(borrow.Status)
+		borrows = models.FindBorrow(c.q, user.Id, id)
+		status := models.NOTBORROW
+		for _, bor := range borrows {
+			if bor.Status == models.BOOK {
+				status = models.BOOK
+			} else if bor.Status > models.BOOK && bor.Status < models.RETURN {
+				status = models.OWN
+			}
 		}
+		fmt.Println(status, "11111111111111")
+		book.SetBorrow(status)
+
 	}
 
-	borrows := models.FindBorrowsByBookId(c.q, id)
+	borrows = models.FindBorrowsByBookId(c.q, id)
 
 	return c.Render(book, borrows)
 }

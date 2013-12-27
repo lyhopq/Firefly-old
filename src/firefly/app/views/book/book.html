@@ -48,20 +48,27 @@
     {{end}}
     <a class="btn btn-primary" href="">推荐</a>
     {{if .IsBooked}}
-        <button href="#" id="borrow" class="btn btn-primary btn-success booked">
+        <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
         <i class="icon-ok"></i>
         <span>已经预借</span>
         </button>
     {{else}}{{if .IsOwned}}
-        <button href="#" id="borrow" class="btn btn-primary btn-success owned">
+        <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
         <i class="icon-ok"></i>
         <span>已经借阅</span>
         </button>
     {{else}}
+        {{if .Has}}
         <button href="#" id="borrow" class="btn btn-primary unbooked">
         <i class="icon-plus"></i>
         <span>加入预借</span>
         </button>
+        {{else}}
+        <button href="#" id="borrow" class="btn btn-primary disabled">
+        <i class="icon-plus"></i>
+        <span>加入预借</span>
+        </button>
+        {{end}}
     {{end}}{{end}}
   </div>
 {{end}}
