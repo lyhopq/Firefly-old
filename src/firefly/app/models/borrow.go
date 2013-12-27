@@ -23,6 +23,7 @@ type Borrow struct {
 	Book   *Book
 	Status int
 
+	Created time.Time
 	Updated time.Time
 }
 
@@ -132,7 +133,7 @@ func userBorrows(q *qbs.Qbs, page int, uid int64, con *qbs.Condition) ([]*Borrow
 	var borrows []*Borrow
 	var rows int64
 	rows = q.Condition(con).Count("borrow")
-	err := q.Condition(con).Limit(ItemsPerPage).
+	err := q.Condition(con).Limit(ItemsPerPage).OrderByDesc("created").
 		Offset(page * ItemsPerPage).FindAll(&borrows)
 	if err != nil {
 		fmt.Println(err)
@@ -148,14 +149,14 @@ func UserBook(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
 }
 
 func UserOwn(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
-	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("status", OWN)
+	condition := qbs.NewEqualCondition("user_id", uid)
+	condition1 := qbs.NewEqualCondition("status", OWN).OrEqual("status", PRERET)
+	condition.AndCondition(condition1)
 	return userBorrows(q, page, uid, condition)
 }
 
 func UserHis(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
-	condition := qbs.NewEqualCondition("user_id", uid)
-	condition1 := qbs.NewCondition("status > ?", BOOK)
-	condition.AndCondition(condition1)
+	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("status", RETURN)
 	return userBorrows(q, page, uid, condition)
 }
 
@@ -164,4 +165,8 @@ func (b *Borrow) SetBorrowStatus(q *qbs.Qbs, st int) error {
 	_, err := q.Save(b)
 
 	return err
+}
+
+func (b *Borrow) IsPreRet() bool {
+	return b.Status == PRERET
 }

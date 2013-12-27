@@ -28,8 +28,8 @@
 					<td>{{.Book.Title}}</td>
 					<td>{{datetime .Updated}}</td>
 					<td>
-						<button href="#" class="btn btn-mini btn-primary btn-ok confirm" id="{{.Id}}"><i class="icon-ok icon-white"></i> 确认</button>
-						<button href="#" class="btn btn-mini btn-danger remove" id="{{.Id}}"><i class="icon-remove icon-white"></i> 删除</button>
+						<button href="#" class="btn btn-mini btn-primary btn-ok confirm" id="{{.Id}}"><i class="icon-ok icon-white"></i> 接受</button>
+						<button href="#" class="btn btn-mini btn-danger remove" id="{{.Id}}"><i class="icon-remove icon-white"></i> 拒绝</button>
 					</td>
 				</tr>
 			{{end}}
@@ -42,7 +42,6 @@ $(document).ready(function(){
 	var id, button;
 	$("button.confirm").click(function () {
 		var id = $(this).attr("id");
-		console.log('borrow/'+ id + '/confirm')
 		$.getJSON('borrow/'+ id + '/confirm', function(data) {
 			if (data) {
 				$("tr#" + id).fadeOut("slow", function () {
@@ -53,11 +52,9 @@ $(document).ready(function(){
 	});
 
 	$("button.remove").click(function () {
-		if (confirm("确定删除吗?")) {
+		if (confirm("确定拒绝吗?")) {
 			var id = $(this).attr("id");
-
-			console.log('book/'+ id + '/delete')
-			$.getJSON('borrow/'+ id + '/delete', function(data) {
+			$.getJSON('borrow/'+ id + '/reject', function(data) {
 				if (data) {
 					$("tr#" + id).fadeOut("slow", function () {
 						$("tr#" + id).remove();

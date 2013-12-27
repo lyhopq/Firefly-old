@@ -122,9 +122,23 @@ func (c *Admin) ConfirmBorrow(id int64) revel.Result {
 	return c.RenderJson([]byte("true"))
 }
 
-func (c *Admin) DeleteBorrow(id int64) revel.Result {
+func (c *Admin) RejectBorrow(id int64) revel.Result {
 	borrow := models.FindBorrowById(c.q, id)
 	c.q.Delete(borrow)
+
+	return c.RenderJson([]byte("true"))
+}
+
+func (c *Admin) ConfirmReturn(id int64) revel.Result {
+	borrow := models.FindBorrowById(c.q, id)
+	borrow.SetBorrowStatus(c.q, models.RETURN)
+
+	return c.RenderJson([]byte("true"))
+}
+
+func (c *Admin) RejectReturn(id int64) revel.Result {
+	borrow := models.FindBorrowById(c.q, id)
+	borrow.SetBorrowStatus(c.q, models.OWN)
 
 	return c.RenderJson([]byte("true"))
 }

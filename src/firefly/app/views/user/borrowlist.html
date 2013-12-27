@@ -44,7 +44,11 @@
 				<td>{{.Book.Title}}</td>
 				<td>{{datetime .Updated}}</td>
 				<td>
+                    {{if .IsPreRet}}
+					<button href="#" class="btn btn-mini btn-danger disabled" id="{{.Id}}"><i class="icon-remove icon-white"></i> 还书</button>
+                    {{else}}
 					<button href="#" class="btn btn-mini btn-danger preret" id="{{.Id}}"><i class="icon-remove icon-white"></i> 还书</button>
+                    {{end}}
 				</td>
 			</tr>
 		{{end}}
@@ -62,12 +66,14 @@
 			<tr>
 				<th>书名</th>
 				<th>借书时间</th>
+				<th>归还时间</th>
 			</tr>
 		</thead>
 		<tbody>
 		{{range .borrows}}
 			<tr id="{{.Id}}">
 				<td>{{.Book.Title}}</td>
+				<td>{{datetime .Created}}</td>
 				<td>{{datetime .Updated}}</td>
 			</tr>
 		{{end}}
