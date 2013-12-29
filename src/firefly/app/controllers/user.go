@@ -141,6 +141,10 @@ func (c *User) BorrowHis(page int) revel.Result {
 	return c.RenderTemplate("user/borrow.html")
 }
 
+func (c *User) Collected(page int) revel.Result {
+	return nil
+}
+
 func (c *User) BookDel(id int64) revel.Result {
 	bor := models.FindBorrowById(c.q, id)
 	var ok bool

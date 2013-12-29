@@ -39,3 +39,13 @@ func RemoveCollect(q *qbs.Qbs, uid, bid int64) {
 		q.Delete(collect)
 	}
 }
+
+func UserCollect(q *qbs.Qbs, uid int64) int64 {
+	con := qbs.NewEqualCondition("user_id", uid)
+	return q.OmitJoin().Condition(con).Count("collect")
+}
+
+func BookCollect(q *qbs.Qbs, bid int64) int64 {
+	con := qbs.NewEqualCondition("book_id", bid)
+	return q.OmitJoin().Condition(con).Count("collect")
+}

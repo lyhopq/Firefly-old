@@ -17,6 +17,7 @@ func (c *Application) inject() revel.Result {
 	user := c.connected()
 	if user != nil {
 		c.RenderArgs["user"] = user
+		fmt.Println(user.BookCount, user.OwnCount, user.CollectCount)
 	}
 
 	// 检查是否需要授权
@@ -34,6 +35,7 @@ func (c *Application) inject() revel.Result {
 			}
 		}
 	}
+
 	return nil
 }
 
@@ -48,7 +50,8 @@ func (c *Application) connected() *models.User {
 }
 
 func (c *Application) getUser(username string) *models.User {
-	user := new(models.User)
+	//user := new(models.User)
+	user := models.NewUser()
 	c.q.WhereEqual("name", username).Find(user)
 
 	if user.Id == 0 {
@@ -64,5 +67,9 @@ type App struct {
 
 func (c *App) Index() revel.Result {
 	books := models.Recommend(c.q, "hited")
+
+	user := c.connected()
+	user.UpdateBooKEx(c.q, user.Id)
+
 	return c.Render(books)
 }

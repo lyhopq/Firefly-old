@@ -9,6 +9,7 @@ GET     /                                       App.Index
 GET     /signin                                 User.Signin
 GET     /borrow                                 User.Borrow
 GET     /borrow/own                             User.Owned
+GET     /book/collect                           User.Collected
 GET     /borrow/his                             User.BorrowHis
 GET     /book/:id/delete                        User.BookDel
 GET     /book/:id/return                        User.BookReturn

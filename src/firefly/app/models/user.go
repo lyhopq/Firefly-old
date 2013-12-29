@@ -24,11 +24,19 @@ type User struct {
 	//IsActive        bool
 	Created time.Time
 	//Updated         time.Time
+
+	*BookEx `qbs:"-"`
 }
 
 var (
 	nameRegex = regexp.MustCompile("^\\w*$")
 )
+
+func NewUser() *User {
+	user := new(User)
+	user.BookEx = new(BookEx)
+	return user
+}
 
 func (user *User) Validate(q *qbs.Qbs, v *revel.Validation) {
 	v.Required(user.Name).Message("请输入用户名")
@@ -104,4 +112,16 @@ func (u *User) AvatarImgSrc() string {
 		return fmt.Sprintf("/public/upload/%s", u.Avatar)
 	}
 	return fmt.Sprintf("/public/img/%s", u.Avatar)
+}
+
+type BookEx struct {
+	BookCount    int64
+	OwnCount     int64
+	CollectCount int64
+}
+
+func (b *BookEx) UpdateBooKEx(q *qbs.Qbs, uid int64) {
+	b.BookCount = BorrowCount(q, uid, BOOK)
+	b.OwnCount = BorrowCount(q, uid, OWN)
+	b.CollectCount = UserCollect(q, uid)
 }

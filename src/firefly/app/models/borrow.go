@@ -160,6 +160,11 @@ func UserHis(q *qbs.Qbs, page int, uid int64) ([]*Borrow, int64) {
 	return userBorrows(q, page, uid, condition)
 }
 
+func BorrowCount(q *qbs.Qbs, uid int64, status int) int64 {
+	con := qbs.NewEqualCondition("user_id", uid).AndEqual("status", status)
+	return q.OmitJoin().Condition(con).Count("borrow")
+}
+
 func (b *Borrow) SetBorrowStatus(q *qbs.Qbs, st int) error {
 	b.Status = st
 	_, err := q.Save(b)
