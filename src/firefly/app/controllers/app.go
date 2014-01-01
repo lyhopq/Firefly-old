@@ -4,6 +4,7 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 	"fmt"
+	"github.com/huichen/sego"
 	"github.com/robfig/revel"
 	"strings"
 )
@@ -72,4 +73,19 @@ func (c *App) Index() revel.Result {
 	user.UpdateBooKEx(c.q, user.Id)
 
 	return c.Render(books)
+}
+
+func (c *App) Search(q string, page int) revel.Result {
+	text := []byte(q)
+
+	segments := segmenter.Segment(text)
+
+	keys := sego.SegmentsToSlice(segments, true)
+	fmt.Println(keys)
+
+	books, rows := models.SearchBooks(c.q, page, q)
+	pagination := models.GetPagination(page, rows, routes.App.Search(q, page))
+	fmt.Println(books, pagination)
+
+	return c.Render(books, rows, pagination)
 }

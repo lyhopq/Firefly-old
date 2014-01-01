@@ -52,7 +52,7 @@
                 <li {{if eq .active "Topic"}}class="active"{{end}}><a href="">社区</a></li>
                 <li {{if eq .active "Users"}}class="active"{{end}}><a href="">会员</a></li>
           </ul>
-          <form action="/search" class="navbar-search pull-left" method="get">
+          <form action="{{url "App.search"}}" class="navbar-search pull-left" method="get">
             <input type="text" name="q" class="search-query span3" value="" placeholder="搜索">
           </form>
           <ul class="nav pull-right" id="userbar">

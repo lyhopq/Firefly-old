@@ -77,6 +77,12 @@ func GetBooks(q *qbs.Qbs, page int, column string, value interface{}, order stri
 	return books, rows
 }
 
+func SearchBooks(q *qbs.Qbs, page int, value interface{}) ([]*Book, int64) {
+	books, rows := GetBooks(q, page, "title", value, "id")
+
+	return books, rows
+}
+
 func (b *Book) CoverImgSrc() string {
 	if strings.HasPrefix(b.Cover, "thumb") {
 		return fmt.Sprintf("/public/upload/%s", b.Cover)

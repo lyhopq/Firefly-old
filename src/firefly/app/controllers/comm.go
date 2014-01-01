@@ -3,6 +3,7 @@ package controllers
 import (
 	"code.google.com/p/go-uuid/uuid"
 	"fmt"
+	"github.com/huichen/sego"
 	"github.com/robfig/config"
 	"github.com/robfig/revel"
 	"io"
@@ -35,6 +36,8 @@ var (
 	uploadPath string = ""
 	imageExts  string = ".jpg.jpeg.png"
 	Smtp       SmtpType
+
+	segmenter sego.Segmenter
 )
 
 func saveFile(r *revel.Request, formField string) string {

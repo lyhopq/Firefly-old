@@ -5,6 +5,7 @@ import (
 	"fmt"
 	_ "github.com/coocood/mysql"
 	"github.com/coocood/qbs"
+
 	"github.com/robfig/config"
 	"github.com/robfig/revel"
 )
@@ -42,6 +43,8 @@ func Init() {
 	host, _ := c.String("database", "db.host")
 
 	registerDb(driver, dbname, user, password, host)
+
+	segmenter.LoadDictionary(basePath + "/conf/dict.txt")
 }
 
 func registerDb(driver, dbname, user, password, host string) {

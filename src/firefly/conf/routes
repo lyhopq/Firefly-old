@@ -5,6 +5,7 @@
 module:testrunner
 
 GET     /                                       App.Index
+GET     /search                                 App.Search
 
 GET     /signin                                 User.Signin
 GET     /borrow                                 User.Borrow
