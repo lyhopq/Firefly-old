@@ -1,4 +1,7 @@
 <div class="box">
+  {{if eq .rows 0}}
+  <h2 class="title">没有找到你想要的内容，请改变关键字重新搜索！</h2>
+  {{else}}
   <h2 class="title"><i class="icon-book"></i> 搜索结果<i class="more">{{.rows}}</i></h2>
   <ul class="books unstyled reviews">
   {{range .books}}
@@ -29,4 +32,5 @@
   </li>
   {{end}}
   </ul>
+  {{end}}
 </div>

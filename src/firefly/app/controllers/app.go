@@ -81,11 +81,9 @@ func (c *App) Search(q string, page int) revel.Result {
 	segments := segmenter.Segment(text)
 
 	keys := sego.SegmentsToSlice(segments, true)
-	fmt.Println(keys)
 
-	books, rows := models.SearchBooks(c.q, page, q)
+	books, rows := models.SearchBooks(c.q, page, keys)
 	pagination := models.GetPagination(page, rows, routes.App.Search(q, page))
-	fmt.Println(books, pagination)
 
 	return c.Render(books, rows, pagination)
 }

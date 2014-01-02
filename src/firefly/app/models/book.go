@@ -77,9 +77,32 @@ func GetBooks(q *qbs.Qbs, page int, column string, value interface{}, order stri
 	return books, rows
 }
 
-func SearchBooks(q *qbs.Qbs, page int, value interface{}) ([]*Book, int64) {
-	books, rows := GetBooks(q, page, "title", value, "id")
+func SearchBooks(q *qbs.Qbs, page int, value []string) ([]*Book, int64) {
+	if page < 1 {
+		page = 1
+	}
+	page -= 1
 
+	var books []*Book
+	var rows int64
+
+	if len(value) < 1 {
+		return books, rows
+	}
+	condition := qbs.NewCondition("title like ?", "%"+value[0]+"%")
+	if len(value) > 1 {
+		for _, val := range value[1:] {
+			condition.Or("title like ?", "%"+val+"%")
+		}
+	}
+
+	err := q.Condition(condition).OmitFields("Introduction").
+		Limit(ItemsPerPage).Offset(page * ItemsPerPage).FindAll(&books)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	rows = int64(len(books))
 	return books, rows
 }
 
