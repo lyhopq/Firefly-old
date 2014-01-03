@@ -96,7 +96,7 @@ func SearchBooks(q *qbs.Qbs, page int, value []string) ([]*Book, int64) {
 		}
 	}
 
-	err := q.Condition(condition).OmitFields("Introduction").
+	err := q.Condition(condition).OrderByDesc("collected").OmitFields("Introduction").
 		Limit(ItemsPerPage).Offset(page * ItemsPerPage).FindAll(&books)
 	if err != nil {
 		fmt.Println(err)
