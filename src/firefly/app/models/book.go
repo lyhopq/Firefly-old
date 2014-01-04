@@ -166,7 +166,7 @@ func (b *Book) SetBorrow(status int) {
 func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
 	valid := v.Required(b.Title).Message("请输入书名")
 	if valid.Ok {
-		if b.HasName(q) {
+		if !b.existed(q) && b.HasName(q) {
 			err := &revel.ValidationError{
 				Message: "该书已存在",
 				Key:     "book.Title",
@@ -180,6 +180,14 @@ func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
 
 	v.Required(b.Author).Message("请输入作者")
 	v.Required(b.Holding).Message("请输入馆藏数量")
+}
+
+func (b *Book) existed(q *qbs.Qbs) bool {
+	book := new(Book)
+	condition := qbs.NewCondition("id= ?", b.Id)
+	q.Condition(condition).Find(book)
+
+	return book.Id > 0
 }
 
 func (b *Book) HasName(q *qbs.Qbs) bool {

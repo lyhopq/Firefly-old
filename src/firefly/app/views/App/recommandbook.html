@@ -1,0 +1,21 @@
+<div class="box">
+  <h2 class="title"><i class="icon-book"></i> 推荐图书<i class="more"><a href="">更多>></a></i></h2>
+  <div class="slider" id="slider">
+    <ul class="sliderbox">
+    {{range .books}}
+      <li>
+        <a href="{{url "Book.Show" .Id}}" class="pull-left" data-toggle="popover" data-content="{{.Introduction}}" data-placement="right" data-original-title="{{.Title}}" data-trigger="hover"><img style="height:176px;" src="{{.CoverImgSrc}}" alt="{{.Title}}"></a>
+      </li>
+    {{end}}
+    </ul>
+    <ul class="slidernav"></ul> 
+    <div class="prev">&lt;</div> 
+    <div class="next">&gt;</div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function(){  
+    $("#slider").powerSlider({sliderNum:4});
+});
+</script>

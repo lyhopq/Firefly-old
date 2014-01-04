@@ -71,7 +71,9 @@ func (c *App) Index() revel.Result {
 	books := models.Recommend(c.q, "hited")
 
 	user := c.connected()
-	user.UpdateBooKEx(c.q, user.Id)
+	if user != nil {
+		user.UpdateBooKEx(c.q, user.Id)
+	}
 
 	return c.Render(books)
 }

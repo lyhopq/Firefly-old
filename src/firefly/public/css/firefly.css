@@ -511,7 +511,7 @@ cursor: pointer;
 box-shadow: 0px 1px 0px rgba(66, 66, 77, 0.2);
 }
 .super.button {
-background-image: url("/static/img/bg_blended.png");
+background-image: url("/public/img/bg_blended.png");
 padding: 4px 15px 4px 15px;
 border: 1px solid rgba(80,80,90, 0.2);
 border-bottom-color: rgba(80,80,90, 0.35);
@@ -568,4 +568,19 @@ text-align: left;
 .fr {
 float: right;
 text-align: right;
+}
+
+.slider{height:176px; margin:20px auto; overflow:hidden; position:relative;}
+.sliderbox{position:relative;}
+.slidernav{position:absolute; right:0; bottom:0; width:100%; background: rgba(0,0,0,0.5); color:#fff; font-size:0; *word-spacing: -1px;}
+.slidernav li{display: inline-block; *display: inline; *zoom:1; vertical-align: top; font-size:14px; margin-left: 10px; letter-spacing: normal; word-spacing: normal;}
+.slidernav li a{width:16px; padding:2px 4px; height:12px; background:#fff; color:#000; text-align:center;}
+.slidernav li.current a{background:#3B8DD1; color:#fff;}
+@media screen and (-webkit-min-device-antio:0){
+.slidernav{letter-spacing: -5px;}
+}
+.slider .prev, .slider .next{position: absolute; top:50%; margin-top:-30px; cursor: pointer; width:61px; height:61px; left:0; background: url("/public/img/ft_icons.png") 0 0 no-repeat; text-indent:-9999px;}
+.slider .next{right:0; left:auto; background-position: 0 -61px;}
+.sliderbox li {
+  padding-left:10px;
 }
