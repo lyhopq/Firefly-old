@@ -5,46 +5,22 @@ import (
 	"fmt"
 	_ "github.com/coocood/mysql"
 	"github.com/coocood/qbs"
-
-	"github.com/robfig/config"
-	"github.com/robfig/revel"
 )
 
 type Qbs struct {
-	*revel.Controller
 	q *qbs.Qbs
 }
 
-func (c *Qbs) Begin() revel.Result {
+func (c *Qbs) Dial() {
 	q, err := qbs.GetQbs()
 	if err != nil {
 		fmt.Println(err)
 	}
 	c.q = q
-
-	return nil
 }
 
-func (c *Qbs) End() revel.Result {
+func (c *Qbs) Close() {
 	c.q.Close()
-
-	return nil
-}
-
-func Init() {
-	basePath = revel.BasePath
-	uploadPath = basePath + "/public/upload/"
-
-	c, _ := config.ReadDefault(basePath + "/conf/my.conf")
-	driver, _ := c.String("database", "db.driver")
-	dbname, _ := c.String("database", "db.dbname")
-	user, _ := c.String("database", "db.user")
-	password, _ := c.String("database", "db.password")
-	host, _ := c.String("database", "db.host")
-
-	registerDb(driver, dbname, user, password, host)
-
-	segmenter.LoadDictionary(basePath + "/conf/dict.txt")
 }
 
 func registerDb(driver, dbname, user, password, host string) {

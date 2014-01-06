@@ -582,5 +582,6 @@ text-align: right;
 .slider .prev, .slider .next{position: absolute; top:50%; margin-top:-30px; cursor: pointer; width:61px; height:61px; left:0; background: url("/public/img/ft_icons.png") 0 0 no-repeat; text-indent:-9999px;}
 .slider .next{right:0; left:auto; background-position: 0 -61px;}
 .sliderbox li {
-  padding-left:10px;
+  padding-left:11px;
+  list-style-type :none; 
 }

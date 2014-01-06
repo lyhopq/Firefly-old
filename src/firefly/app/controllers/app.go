@@ -6,14 +6,25 @@ import (
 	"firefly/app/util"
 	"fmt"
 	"github.com/huichen/sego"
+	"github.com/robfig/config"
 	"github.com/robfig/revel"
 	"strings"
 )
 
 type Application struct {
+	*revel.Controller
 	Qbs
 }
 
+func (c *Application) Begin() revel.Result {
+	c.Dial()
+	return nil
+}
+
+func (c *Application) End() revel.Result {
+	c.Close()
+	return nil
+}
 func (c *Application) inject() revel.Result {
 	c.RenderArgs["active"] = c.Name
 	user := c.connected()
@@ -61,6 +72,23 @@ func (c *Application) getUser(username string) *models.User {
 	}
 
 	return user
+}
+
+func Init() {
+	basePath = revel.BasePath
+	uploadPath = basePath + "/public/upload/"
+
+	c, _ := config.ReadDefault(basePath + "/conf/my.conf")
+	driver, _ := c.String("database", "db.driver")
+	dbname, _ := c.String("database", "db.dbname")
+	user, _ := c.String("database", "db.user")
+	password, _ := c.String("database", "db.password")
+	host, _ := c.String("database", "db.host")
+	registerDb(driver, dbname, user, password, host)
+
+	doubanKey, _ = c.String("keys", "keys.douban")
+
+	segmenter.LoadDictionary(basePath + "/conf/dict.txt")
 }
 
 type App struct {

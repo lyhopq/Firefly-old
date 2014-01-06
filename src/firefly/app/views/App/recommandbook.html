@@ -4,7 +4,7 @@
     <ul class="sliderbox">
     {{range .books}}
       <li>
-        <a href="{{url "Book.Show" .Id}}" class="pull-left" data-toggle="popover" data-content="{{.Introduction}}" data-placement="right" data-original-title="{{.Title}}" data-trigger="hover"><img style="height:176px;" src="{{.CoverImgSrc}}" alt="{{.Title}}"></a>
+      <a href="{{url "Book.Show" .Id}}" title="{{.Title}}"><img style="height:176px;" src="{{.CoverImgSrc}}" alt="{{.Title}}"></a>
       </li>
     {{end}}
     </ul>

@@ -11,6 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"bytes"
+	"io/ioutil"
+	"net/http"
 )
 
 type SmtpType struct {
@@ -36,6 +40,8 @@ var (
 	uploadPath string = ""
 	imageExts  string = ".jpg.jpeg.png"
 	Smtp       SmtpType
+
+	doubanKey string = ""
 
 	segmenter sego.Segmenter
 )
@@ -121,4 +127,24 @@ Content-Type: text/html;charset=UTF-8
 	}
 
 	return nil
+}
+
+func getImg(url string, fileName string) (name string, err error) {
+	if fileName == "" {
+		path := strings.Split(url, "/")
+		if len(path) > 1 {
+			fileName = path[len(path)-1]
+		}
+	}
+	out, err := os.Create(fileName)
+	defer out.Close()
+	resp, err := http.Get(url)
+	defer resp.Body.Close()
+	pix, err := ioutil.ReadAll(resp.Body)
+	_, err = io.Copy(out, bytes.NewReader(pix))
+	if err != nil {
+		return "", err
+	}
+
+	return fileName, nil
 }

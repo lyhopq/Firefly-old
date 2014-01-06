@@ -22,6 +22,8 @@ GET     /admin/books                            Admin.ListBook
 GET     /admin/book/new                         Admin.NewBook
 GET     /admin/book/:id/edit                    Admin.EditBook
 GET     /admin/book/:id/delete                  Admin.DeleteBook
+GET     /admin/book/:isbn/fetch                 Admin.FetchBook
+GET     /admin/book/:id/update                  Admin.UpdateBook
 GET     /admin/borrows                          Admin.ListBorrow
 GET     /admin/returns                          Admin.ListReturn
 GET     /admin/borrow/:id/confirm               Admin.ConfirmBorrow

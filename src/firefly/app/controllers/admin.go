@@ -4,6 +4,10 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 
+	"strconv"
+	"strings"
+
+	"github.com/lyhopq/douban"
 	"github.com/robfig/revel"
 )
 
@@ -52,7 +56,6 @@ func (c *Admin) NewBookPost(book models.Book) revel.Result {
 	}
 
 	book.Existing = book.Holding
-	book.Cover = defaultCover
 	if !book.Save(c.q) {
 		c.Flash.Error("添加图书失败")
 	}
@@ -80,7 +83,7 @@ func (c *Admin) EditBookPost(id int64, book models.Book) revel.Result {
 	if c.Validation.HasErrors() {
 		c.Validation.Keep()
 		c.FlashParams()
-		return c.Redirect(routes.Admin.NewBook())
+		return c.Redirect(routes.Admin.EditBook(id))
 	}
 
 	if !book.Save(c.q) {
@@ -141,6 +144,42 @@ func (c *Admin) RejectReturn(id int64) revel.Result {
 	borrow.SetBorrowStatus(c.q, models.OWN)
 
 	return c.RenderJson([]byte("true"))
+}
+
+func fetchBook(isbn string, book *models.Book) {
+	api := douban.NewApi()
+	dBook := api.GetBookByIsbn(isbn)
+
+	book.Title = dBook.Title
+	book.Author = strings.Join(dBook.Author, ", ")
+	book.Translator = strings.Join(dBook.Translator, ", ")
+	pages, err := strconv.ParseInt(dBook.Pages, 10, 0)
+	if err != nil {
+		book.Pages = 0
+	} else {
+		book.Pages = int(pages)
+	}
+	book.Introduction = dBook.Summary
+	book.Publisher = dBook.Publisher
+	book.PublicationDate = dBook.PubDate
+
+	fileName := "thumb_" + isbn + ".jpg"
+	_, err = getImg(dBook.Cover.Large, uploadPath+fileName)
+	if err == nil {
+		book.Cover = fileName
+	}
+}
+
+func (c *Admin) FetchBook(isbn string) revel.Result {
+	book := new(models.Book)
+	fetchBook(isbn, book)
+	return c.RenderJson(book)
+}
+
+func (c *Admin) UpdateBook(id int64) revel.Result {
+	book := models.FindBookById(c.q, id)
+	fetchBook(book.Isbn, book)
+	return c.RenderJson(book)
 }
 
 /*

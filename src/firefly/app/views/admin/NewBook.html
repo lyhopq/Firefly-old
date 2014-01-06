@@ -11,8 +11,19 @@
 			<h3>{{.title}}</h3>
 		</div>
 		{{$book := .book}}
+        <button href="javascript:;" class="btn btn-mini btn-ok {{if $book}}updateBook{{else}}fetchBook{{end}}" {{if $book}}id="{{$book.Id}}"{{end}}><i class=""></i>从豆瓣获取图书信息</button>
 		<form action="{{if $book}}{{url "Admin.EditBookPost" $book.Id}}{{else}}{{url "Admin.NewBookPost"}}{{end}}" method="POST" class="form-horizontal">
 			<input type="hidden" name="csrf_token" value="{{ .csrf_token }}" />
+			{{with $field := field "book.Isbn" .}}
+			<div class="control-group">
+				<label class="required control-label" for="{{$field.Name}}"><abbr title="required">*</abbr>ISBN</label>
+				<div class="controls">
+                    <input type="text" name="{{$field.Name}}" id="isbn"
+						value="{{if $book}}{{$book.Isbn}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
 			{{with $field := field "book.Title" .}}
 			<div class="control-group">
 				<label class="required control-label" for="{{$field.Name}}"><abbr title="required">*</abbr>书名</label>
@@ -62,7 +73,7 @@
 				<label class="control-label" for="{{$field.Name}}">出版日期</label>
 				<div class="controls">
 					<input type="text" name="{{$field.Name}}"
-						value="{{if $book}}{{date $book.PublicationDate}}{{else}}{{$field.Flash}}{{end}}">
+						value="{{if $book}}{{$book.PublicationDate}}{{else}}{{$field.Flash}}{{end}}">
 					<span class="text-error">{{$field.Error}}</span>
 				</div>
 			</div>
@@ -79,23 +90,12 @@
 			</div>
 			{{end}}
 
-			{{with $field := field "book.Language" .}}
+			{{with $field := field "book.Cover" .}}
 			<div class="control-group">
-				<label class="control-label" for="{{$field.Name}}">语言</label>
+				<label class="control-label" for="{{$field.Name}}">封面</label>
 				<div class="controls">
 					<input type="text" name="{{$field.Name}}"
-						value="{{if $book}}{{$book.Language}}{{else}}{{$field.Flash}}{{end}}">
-					<span class="text-error">{{$field.Error}}</span>
-				</div>
-			</div>
-			{{end}}
-
-			{{with $field := field "book.Isbn" .}}
-			<div class="control-group">
-				<label class="control-label" for="{{$field.Name}}">ISBN</label>
-				<div class="controls">
-					<input type="text" name="{{$field.Name}}"
-						value="{{if $book}}{{$book.Isbn}}{{else}}{{$field.Flash}}{{end}}">
+						value="{{if $book}}{{$book.Cover}}{{else}}{{$field.Flash}}{{end}}">
 					<span class="text-error">{{$field.Error}}</span>
 				</div>
 			</div>
@@ -116,7 +116,7 @@
 			<div class="control-group">
 				<label class="control-label" for="{{$field.Name}}">说明</label>
 				<div class="controls">
-					<textarea name="{{$field.Name}}" rows="4" class="span8">{{if $book}}{{$book.Introduction}}{{else}}{{$field.Flash}}{{end}}</textarea>
+					<textarea name="{{$field.Name}}" rows="8" class="span8">{{if $book}}{{$book.Introduction}}{{else}}{{$field.Flash}}{{end}}</textarea>
 					<span class="text-error">{{$field.Error}}</span>
 				</div>
 			</div>
@@ -128,7 +128,53 @@
 				</div>
 			</div>
 		</form>
+
 	</div><!--/span-->
 
 </div><!--/row-->
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var id, button;
+	$("button.fetchBook").click(function () {
+	    var isbn = $("input[name='book.Isbn']").val();
+        if(isbn) {
+	    	$.getJSON(isbn + '/fetch', function(data) {
+	    		if (data) {
+                    $("input[name='book.Title']").attr("value", data.Title);
+                    $("input[name='book.Author']").attr("value", data.Author);
+                    $("input[name='book.Translator']").attr("value", data.Translator);
+                    $("input[name='book.Publisher']").attr("value", data.Publisher);
+                    $("input[name='book.Pages']").attr("value", data.Pages);
+                    $("input[name='book.Cover']").attr("value", data.Cover);
+                    $("input[name='book.PublicationDate']").attr("value", data.PublicationDate);
+                    $("textarea[name='book.Introduction']").val(data.Introduction);
+                }
+	        });
+        } else {
+            alert("请输入ISBN！");
+        };
+    });
+
+	$("button.updateBook").click(function () {
+	    var id = $(this).attr("id");
+        if(isbn) {
+	    	$.getJSON('update', function(data) {
+	    		if (data) {
+                    $("input[name='book.Title']").attr("value", data.Title);
+                    $("input[name='book.Author']").attr("value", data.Author);
+                    $("input[name='book.Translator']").attr("value", data.Translator);
+                    $("input[name='book.Publisher']").attr("value", data.Publisher);
+                    $("input[name='book.Pages']").attr("value", data.Pages);
+                    $("input[name='book.Cover']").attr("value", data.Cover);
+                    $("input[name='book.PublicationDate']").attr("value", data.PublicationDate);
+                    $("textarea[name='book.Introduction']").val(data.Introduction);
+                }
+	        });
+        } else {
+            alert("请输入ISBN！");
+        };
+    });
+});
+</script>
 {{template "admin/footer.html" .}}

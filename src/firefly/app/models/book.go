@@ -17,8 +17,7 @@ type Book struct {
 	Pages           int    `qbs:"size:32"`
 	Introduction    string
 	Publisher       string `qbs:"size:64"`
-	Language        string `qbs:"size:16"`
-	PublicationDate time.Time
+	PublicationDate string
 	Isbn            string `qbs:"size:16,unique,notnull,index"`
 
 	ShelfTime time.Time `qbs:"created"`
@@ -47,6 +46,11 @@ func FindBookById(q *qbs.Qbs, id int64) *Book {
 	}
 
 	return book
+}
+
+func CountBook(q *qbs.Qbs) int64 {
+	rows := q.Count("book")
+	return rows
 }
 
 func GetBooks(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Book, int64) {
@@ -164,12 +168,12 @@ func (b *Book) SetBorrow(status int) {
 }
 
 func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
-	valid := v.Required(b.Title).Message("请输入书名")
+	valid := v.Required(b.Isbn).Message("请输入ISBN")
 	if valid.Ok {
-		if !b.existed(q) && b.HasName(q) {
+		if !b.existed(q) && b.HasIsbn(q) {
 			err := &revel.ValidationError{
 				Message: "该书已存在",
-				Key:     "book.Title",
+				Key:     "book.Isbn",
 			}
 			valid.Error = err
 			valid.Ok = false
@@ -178,6 +182,7 @@ func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
 		}
 	}
 
+	v.Required(b.Title).Message("请输入书名")
 	v.Required(b.Author).Message("请输入作者")
 	v.Required(b.Holding).Message("请输入馆藏数量")
 }
@@ -190,9 +195,9 @@ func (b *Book) existed(q *qbs.Qbs) bool {
 	return book.Id > 0
 }
 
-func (b *Book) HasName(q *qbs.Qbs) bool {
+func (b *Book) HasIsbn(q *qbs.Qbs) bool {
 	book := new(Book)
-	condition := qbs.NewCondition("title= ?", b.Title)
+	condition := qbs.NewCondition("isbn= ?", b.Isbn)
 	q.Condition(condition).Find(book)
 
 	return book.Id > 0
