@@ -4,7 +4,6 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 
-	"fmt"
 	"github.com/robfig/revel"
 )
 
@@ -71,9 +70,7 @@ func (c *Book) Show(id int64) revel.Result {
 				status = models.OWN
 			}
 		}
-		fmt.Println(status, "11111111111111")
 		book.SetBorrow(status)
-
 	}
 
 	borrows = models.FindBorrowsByBookId(c.q, id)

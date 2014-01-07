@@ -55,7 +55,10 @@ func (c *Admin) NewBookPost(book models.Book) revel.Result {
 		return c.Redirect(routes.Admin.NewBook())
 	}
 
-	book.Existing = book.Holding
+	if book.Existing == 0 {
+		book.Existing = book.Holding
+	}
+
 	if !book.Save(c.q) {
 		c.Flash.Error("添加图书失败")
 	}

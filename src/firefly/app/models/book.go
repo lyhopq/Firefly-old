@@ -185,6 +185,7 @@ func (b *Book) Validate(q *qbs.Qbs, v *revel.Validation) {
 	v.Required(b.Title).Message("请输入书名")
 	v.Required(b.Author).Message("请输入作者")
 	v.Required(b.Holding).Message("请输入馆藏数量")
+	v.Range(b.Existing, 0, b.Holding).Message("剩余数量不正确")
 }
 
 func (b *Book) existed(q *qbs.Qbs) bool {

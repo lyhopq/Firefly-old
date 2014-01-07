@@ -112,6 +112,17 @@
 			</div>
 			{{end}}
 
+			{{with $field := field "book.Existing" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">剩余</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Existing}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
+
 			{{with $field := field "book.Introduction" .}}
 			<div class="control-group">
 				<label class="control-label" for="{{$field.Name}}">说明</label>
