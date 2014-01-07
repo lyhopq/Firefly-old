@@ -127,3 +127,19 @@ func (c *App) Search(q string, page int) revel.Result {
 
 	return c.Render(books, rows, pagination)
 }
+
+func (c *App) Notice() revel.Result {
+
+	type Notice struct {
+		Err     bool
+		Title   string
+		Content string
+	}
+
+	notice := new(Notice)
+	notice.Err = false
+	notice.Title = "Welcome"
+	notice.Content = "Firefly社区上线！"
+
+	return c.RenderJson(notice)
+}

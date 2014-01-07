@@ -10,4 +10,40 @@
     {{template "app/rightbar.html" .}}
   </div>
 </div>
+
+<script type="text/javascript">
+    $(function(){
+        $.getJSON('notice', function(data){
+            if (!data.Err) {
+                $('#notice_title').html(data.Title);
+                $('#notice_content').html(data.Content);
+            }
+        });
+    
+        $.getJSON('stat', function(data){
+            if (!data.errno) {
+                $('#_user').html(data.user);
+                $('#_topic').html(data.topic);
+                $('#_reply').html(data.reply);
+                $('#_resource').html(data.resource);
+            }
+        });
+    
+        $.getJSON('hot', function(data){
+            if (!data.errno) {
+                if (data.nodes == null) {
+                    return
+                }
+                var count = data.nodes.length
+                  nodeHtml = '';
+                for (var i=0; i<count; i++) {
+                    var node = data.nodes[i];
+                    nodeHtml += '<li> <a href="/topics/node'+node.nid+'" title="'+node.name+'">'+node.name+'</a></li>';
+                }
+                $('#hotnodes').html(nodeHtml);
+            }
+        });
+    });
+</script>
+
 {{template "footer.html" .}}
