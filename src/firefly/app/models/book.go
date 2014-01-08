@@ -14,7 +14,8 @@ type Book struct {
 	Cover           string `qbs:"size:128"`
 	Author          string `qbs:"size:64,notnull"`
 	Translator      string `qbs:"size:64"`
-	Pages           int    `qbs:"size:32"`
+	Price           string
+	Pages           int `qbs:"size:32"`
 	Introduction    string
 	Publisher       string `qbs:"size:64"`
 	PublicationDate string

@@ -42,7 +42,7 @@ func FindBorrowById(q *qbs.Qbs, id int64) *Borrow {
 func FindBorrow(q *qbs.Qbs, uid, bid int64) []*Borrow {
 	var borrows []*Borrow
 	condition := qbs.NewEqualCondition("user_id", uid).AndEqual("book_id", bid)
-	err := q.Condition(condition).FindAll(&borrows)
+	err := q.Condition(condition).OrderByDesc("id").FindAll(&borrows)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -86,8 +86,8 @@ func RemoveBooking(q *qbs.Qbs, uid, bid int64) bool {
 	book.Existing += 1
 
 	bor := FindBorrow(q, uid, bid)
-	if bor != nil {
-		if _, err := q.Delete(bor); err != nil {
+	if len(bor) > 0 {
+		if _, err := q.Delete(bor[0]); err != nil {
 			return false
 		}
 

@@ -177,6 +177,19 @@ ul ul, ul ol, ol ol, ol ul, ul {
 }
 
 .box {
+  background: white;
+  padding: 10px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.15);
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.15);
+  border-bottom: 1px solid #E2E2E9;
+  margin-bottom: 30px;
+}
+/*
+.box {
   background-color: #fff;
   padding: 10px;
   margin: 0 0 20px 0;
@@ -187,6 +200,7 @@ ul ul, ul ol, ol ol, ol ul, ul {
   -moz-box-shadow: 0 0px 2px rgba(0,0,0,0.1);
   box-shadow: 0 0px 2px rgba(0,0,0,0.05);
 }
+*/
 
 .box h2.title {
   font-size: 12px;
@@ -369,10 +383,6 @@ abbr[title] {
   padding-left: 10px;
 }
 
-.block .box {
-  margin: 3px;
-  clear: both;
-}
 
 .box > .btn {
   padding:5px;
@@ -413,15 +423,32 @@ ul.books li {
 }
 .reviews li .cover {
   margin-right: 15px;
-}
-.reviews li .cover img {
   width: 80px;
 }
-.reviews li .info {
-  width:500px;
+
+.details {
+  width: 100%;
+  min-height: 220px;
 }
 
-.reviews li .info .header h5 {
+.details .cover {
+  margin-right: 15px;
+  width:150px;
+}
+
+.controls {
+  padding-top:30px;
+}
+
+.reviews .info {
+  width:700px;
+}
+
+.details .info {
+  width:650px;
+}
+
+.info .header h5 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -429,16 +456,17 @@ ul.books li {
   margin-top: 0;
 }
 
-.reviews li .info .body .feedback {
+.info .body .feedback {
   color: #9A9C98;
   height: 16px;
   line-height: 16px;
 }
 
-.reviews li .info .body .feedback span {
+.info .body .feedback span {
   color: #81b38a;
   padding: 0 6px;
 }
+
 span.eye {
   background: url(/public/img/Eye.png) no-repeat;
   padding-left: 20px;
@@ -570,7 +598,7 @@ float: right;
 text-align: right;
 }
 
-.slider{height:176px; margin:20px auto; overflow:hidden; position:relative;}
+.slider{height:200px; margin:5px auto; overflow:hidden; position:relative;}
 .sliderbox{position:relative;}
 .slidernav{position:absolute; right:0; bottom:0; width:100%; background: rgba(0,0,0,0.5); color:#fff; font-size:0; *word-spacing: -1px;}
 .slidernav li{display: inline-block; *display: inline; *zoom:1; vertical-align: top; font-size:14px; margin-left: 10px; letter-spacing: normal; word-spacing: normal;}
@@ -582,6 +610,14 @@ text-align: right;
 .slider .prev, .slider .next{position: absolute; top:50%; margin-top:-30px; cursor: pointer; width:61px; height:61px; left:0; background: url("/public/img/ft_icons.png") 0 0 no-repeat; text-indent:-9999px;}
 .slider .next{right:0; left:auto; background-position: 0 -61px;}
 .sliderbox li {
-  padding-left:11px;
+  padding-right:5px;
   list-style-type :none; 
+}
+
+.app-article .rating {
+margin-top: 8px;
+}
+.article-rating {
+line-height: 18px;
+color: #825d5b;
 }

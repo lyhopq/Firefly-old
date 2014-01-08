@@ -4,6 +4,7 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -155,6 +156,8 @@ func fetchBook(isbn string, book *models.Book) {
 
 	book.Title = dBook.Title
 	book.Author = strings.Join(dBook.Author, ", ")
+	book.Price = dBook.Price
+	fmt.Println(dBook.Price, "22222222222")
 	book.Translator = strings.Join(dBook.Translator, ", ")
 	pages, err := strconv.ParseInt(dBook.Pages, 10, 0)
 	if err != nil {

@@ -79,6 +79,16 @@
 			</div>
 			{{end}}
 
+			{{with $field := field "book.Price" .}}
+			<div class="control-group">
+				<label class="control-label" for="{{$field.Name}}">价格</label>
+				<div class="controls">
+					<input type="text" name="{{$field.Name}}"
+						value="{{if $book}}{{$book.Price}}{{else}}{{$field.Flash}}{{end}}">
+					<span class="text-error">{{$field.Error}}</span>
+				</div>
+			</div>
+			{{end}}
 			{{with $field := field "book.Pages" .}}
 			<div class="control-group">
 				<label class="control-label" for="{{$field.Name}}">页数</label>
@@ -157,6 +167,7 @@ $(document).ready(function(){
                     $("input[name='book.Translator']").attr("value", data.Translator);
                     $("input[name='book.Publisher']").attr("value", data.Publisher);
                     $("input[name='book.Pages']").attr("value", data.Pages);
+                    $("input[name='book.Price']").attr("value", data.Price);
                     $("input[name='book.Cover']").attr("value", data.Cover);
                     $("input[name='book.PublicationDate']").attr("value", data.PublicationDate);
                     $("textarea[name='book.Introduction']").val(data.Introduction);
@@ -177,6 +188,7 @@ $(document).ready(function(){
                     $("input[name='book.Translator']").attr("value", data.Translator);
                     $("input[name='book.Publisher']").attr("value", data.Publisher);
                     $("input[name='book.Pages']").attr("value", data.Pages);
+                    $("input[name='book.Price']").attr("value", data.Price);
                     $("input[name='book.Cover']").attr("value", data.Cover);
                     $("input[name='book.PublicationDate']").attr("value", data.PublicationDate);
                     $("textarea[name='book.Introduction']").val(data.Introduction);
