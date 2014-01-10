@@ -1,4 +1,4 @@
-{{set . "title" "图书列表"}}
+{{set . "title" "公告列表"}}
 {{template "admin/header.html" .}}
 
 <div class="row-fluid">
@@ -16,18 +16,18 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>书名</th>
-					<th>状态</th>
+					<th>标题</th>
+					<th>发布时间</th>
 					<th>操作</th>
 				</tr>
 			 </thead>
-			{{range .books}}
+			{{range .notices}}
 				<tr id="{{.Id}}">
 					<td>{{.Id}}</td>
 					<td>{{.Title}}</td>
-                    <td>馆藏：{{.Holding}} 剩余：{{.Existing}} <a href="">借阅详情</a></td>
+                    <td>{{date .Created}}</td>
 					<td>
-						<a href="{{url "Admin.EditBook" .Id}}" class="btn btn-mini btn-info"><i class="icon-edit icon-white"></i> 编辑</a>
+						<a href="{{url "Admin.EditNotice" .Id}}" class="btn btn-mini btn-info"><i class="icon-edit icon-white"></i> 编辑</a>
 						<button href="#" class="btn btn-mini btn-danger remove" id="{{.Id}}"><i class="icon-remove icon-white"></i> 删除</button>
 					</td>
 				</tr>
@@ -44,8 +44,7 @@ $(document).ready(function(){
 		if (confirm("确定删除吗?")) {
 			var id = $(this).attr("id");
 
-			console.log('book/'+ id + '/delete')
-			$.getJSON('book/'+ id + '/delete', function(data) {
+			$.getJSON('notice/'+ id + '/delete', function(data) {
 				if (data) {
 					$("tr#" + id).fadeOut("slow", function () {
 						$("tr#" + id).remove();

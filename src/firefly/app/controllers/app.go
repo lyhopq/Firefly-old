@@ -129,17 +129,17 @@ func (c *App) Search(q string, page int) revel.Result {
 }
 
 func (c *App) Notice() revel.Result {
-
-	type Notice struct {
-		Err     bool
-		Title   string
-		Content string
+	type result struct {
+		Err bool
+		N   *models.Notice
 	}
 
-	notice := new(Notice)
-	notice.Err = false
-	notice.Title = "Welcome"
-	notice.Content = "Firefly社区上线！"
+	res := new(result)
+	notice := models.LastNotice(c.q)
+	if notice != nil {
+		res.Err = false
+		res.N = notice
+	}
 
-	return c.RenderJson(notice)
+	return c.RenderJson(res)
 }

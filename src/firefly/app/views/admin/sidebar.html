@@ -21,5 +21,11 @@
             <a href="{{url "Admin.ListReturn"}}">新建分类</a></li>
 		<li {{if eq .title "分类列表"}}class="active"{{end}}>
 			<a href="">分类列表</a></li>
+
+		<li class="nav-header"><i class="icon-th-list"></i></li>
+		<li {{if eq .title "新建公告"}}class="active"{{end}}>
+            <a href="{{url "Admin.NewNotice"}}">新建公告</a></li>
+		<li {{if eq .title "公告列表"}}class="active"{{end}}>
+            <a href="{{url "Admin.ListNotice"}}">公告列表</a></li>
 	</ul>
 </div>

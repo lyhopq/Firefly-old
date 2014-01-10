@@ -43,7 +43,7 @@ func createTabel() error {
 	err = migration.CreateTableIfNotExists(new(models.Book))
 	err = migration.CreateTableIfNotExists(new(models.Collect))
 	err = migration.CreateTableIfNotExists(new(models.Borrow))
-	//err = migration.CreateTableIfNotExists(new(models.Permissions))
+	err = migration.CreateTableIfNotExists(new(models.Notice))
 
 	return err
 }

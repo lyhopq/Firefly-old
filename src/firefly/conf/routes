@@ -31,6 +31,10 @@ GET     /admin/borrow/:id/confirm               Admin.ConfirmBorrow
 GET     /admin/borrow/:id/reject                Admin.RejectBorrow
 GET     /admin/return/:id/confirm               Admin.ConfirmReturn
 GET     /admin/return/:id/reject                Admin.RejectReturn
+GET     /admin/notices                          Admin.ListNotice
+GET     /admin/notice/new                       Admin.NewNotice
+GET     /admin/notice/:id/delete                Admin.DeleteNotice
+GET     /admin/notice/:id/edit                  Admin.EditNotice
 
 GET     /book                                   Book.Index
 GET     /book/mr                                Book.MostRead

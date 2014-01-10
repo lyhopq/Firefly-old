@@ -13,8 +13,8 @@
     $(function(){
         $.getJSON('notice', function(data){
             if (!data.Err) {
-                $('#notice_title').html(data.Title);
-                $('#notice_content').html(data.Content);
+                $('#notice_title').html(data.N.Title);
+                $('#notice_content').html(data.N.Content);
             }
         });
     

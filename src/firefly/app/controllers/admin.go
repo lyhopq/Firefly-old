@@ -4,7 +4,6 @@ import (
 	"firefly/app/models"
 	"firefly/app/routes"
 
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -157,7 +156,6 @@ func fetchBook(isbn string, book *models.Book) {
 	book.Title = dBook.Title
 	book.Author = strings.Join(dBook.Author, ", ")
 	book.Price = dBook.Price
-	fmt.Println(dBook.Price, "22222222222")
 	book.Translator = strings.Join(dBook.Translator, ", ")
 	pages, err := strconv.ParseInt(dBook.Pages, 10, 0)
 	if err != nil {
@@ -186,6 +184,72 @@ func (c *Admin) UpdateBook(id int64) revel.Result {
 	book := models.FindBookById(c.q, id)
 	fetchBook(book.Isbn, book)
 	return c.RenderJson(book)
+}
+
+func (c *Admin) ListNotice(page int) revel.Result {
+	title := "社区公告"
+	notices, rows := models.GetNotices(c.q, page)
+	pagination := models.GetPagination(page, rows, routes.Admin.ListNotice(page))
+
+	return c.Render(title, notices, pagination)
+}
+
+func (c *Admin) NewNotice() revel.Result {
+	title := "添加公告"
+	return c.Render(title)
+}
+
+func (c *Admin) NewNoticePost(notice models.Notice) revel.Result {
+	notice.Validate(c.q, c.Validation)
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Admin.NewNotice())
+	}
+
+	if !notice.Save(c.q) {
+		c.Flash.Error("添加公告失败")
+	}
+
+	page := 1
+	return c.Redirect(routes.Admin.ListNotice(page))
+}
+
+func (c *Admin) EditNoticePost(id int64, notice models.Notice) revel.Result {
+	notice.Id = id
+	notice.Validate(c.q, c.Validation)
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.Admin.EditNotice(id))
+	}
+
+	if !notice.Save(c.q) {
+		c.Flash.Error("编辑公告失败")
+	}
+
+	page := 1
+	return c.Redirect(routes.Admin.ListNotice(page))
+}
+
+func (c *Admin) EditNotice(id int64) revel.Result {
+	title := "编辑公告"
+	notice := models.FindNoticeById(c.q, id)
+	if notice.Id == 0 {
+		return c.NotFound("公告不存在")
+	}
+
+	c.Render(title, notice)
+
+	return c.RenderTemplate("admin/NewNotice.html")
+}
+
+func (c *Admin) DeleteNotice(id int64) revel.Result {
+	notice := new(models.Notice)
+	notice.Id = id
+	c.q.Delete(notice)
+
+	return c.RenderJson([]byte("true"))
 }
 
 /*
