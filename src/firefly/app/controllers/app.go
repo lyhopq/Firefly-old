@@ -143,3 +143,20 @@ func (c *App) Notice() revel.Result {
 
 	return c.RenderJson(res)
 }
+
+func (c *App) Stat() revel.Result {
+	type Stat struct {
+		User   int64
+		Book   int64
+		Topic  int64
+		Replay int64
+	}
+
+	stat := new(Stat)
+	stat.User = models.UserCount(c.q)
+	stat.Book = models.BookCount(c.q)
+	stat.Topic = 0
+	stat.Replay = 0
+
+	return c.RenderJson(stat)
+}

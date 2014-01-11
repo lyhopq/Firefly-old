@@ -19,12 +19,10 @@
         });
     
         $.getJSON('stat', function(data){
-            if (!data.errno) {
-                $('#_user').html(data.user);
-                $('#_topic').html(data.topic);
-                $('#_reply').html(data.reply);
-                $('#_resource').html(data.resource);
-            }
+            $('#_user').html(data.User+" 人");
+            $('#_book').html(data.Book+" 册");
+            $('#_topic').html(data.Topic+" 条");
+            $('#_reply').html(data.Replay+" 条");
         });
     
         $.getJSON('hot', function(data){

@@ -114,6 +114,10 @@ func (u *User) AvatarImgSrc() string {
 	return fmt.Sprintf("/public/img/%s", u.Avatar)
 }
 
+func UserCount(q *qbs.Qbs) int64 {
+	return q.Count("user")
+}
+
 type BookEx struct {
 	BookCount    int64
 	OwnCount     int64

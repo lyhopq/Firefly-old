@@ -7,6 +7,7 @@ module:testrunner
 GET     /                                       App.Index
 GET     /search                                 App.Search
 GET     /notice                                 App.Notice
+GET     /stat                                   App.Stat
 
 GET     /signin                                 User.Signin
 GET     /borrow                                 User.Borrow

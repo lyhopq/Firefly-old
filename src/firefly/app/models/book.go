@@ -34,6 +34,10 @@ type Book struct {
 	IsOwned     bool `qbs:"-"`
 }
 
+func BookCount(q *qbs.Qbs) int64 {
+	return q.Count("book")
+}
+
 func Recommend(q *qbs.Qbs, column string) []*Book {
 	books, _ := GetBooks(q, 1, "", "", column)
 	return books
