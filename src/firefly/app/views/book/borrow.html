@@ -1,11 +1,18 @@
-<div class="box">
 <ul class="unstyled ">
-{{range .borrows}}
-<li class="">
-    <div class="cover pull-left">
-        <p>{{.User.Name}}</p>
-    </div>
-</li>
-{{end}}
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>用户</th>
+				<th>借阅时间</th>
+				<th>状态</th>
+			</tr>
+		 </thead>
+		{{range .borrows}}
+			<tr id="{{.Id}}">
+				<td>{{.User.Name}}</td>
+				<td>{{datetime .Created}}</td>
+                <td>{{.ShowStatus}}</td>
+			</tr>
+		{{end}}
+	</table>
 </ul>
-</div>

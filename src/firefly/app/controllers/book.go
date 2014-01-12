@@ -46,22 +46,41 @@ func (c *Book) MostComment(page int) revel.Result {
 
 func (c *Book) Show(id int64) revel.Result {
 	book := models.FindBookById(c.q, id)
+
+	c.updateBookInfo(book)
+
+	subActive := "intro"
+	return c.Render(book, subActive)
+}
+
+func (c *Book) Borrow(id int64) revel.Result {
+	book := models.FindBookById(c.q, id)
+
+	c.updateBookInfo(book)
+
+	borrows := models.FindBorrowsByBookId(c.q, id)
+
+	subActive := "borrow"
+	c.Render(book, subActive, borrows)
+	return c.RenderTemplate("book/Show.html")
+}
+
+func (c *Book) updateBookInfo(book *models.Book) revel.Result {
 	if book.Id == 0 {
 		return c.NotFound("书籍不存在")
 	}
 
 	book.AddHited(c.q)
 	user := c.connected()
-	var borrows []*models.Borrow
 	if user != nil {
-		collect := models.FindCollect(c.q, user.Id, id)
+		collect := models.FindCollect(c.q, user.Id, book.Id)
 		if collect != nil {
 			book.SetCollected(true)
 		} else {
 			book.SetCollected(false)
 		}
 
-		borrows = models.FindBorrow(c.q, user.Id, id)
+		borrows := models.FindBorrow(c.q, user.Id, book.Id)
 		status := models.NOTBORROW
 		for _, bor := range borrows {
 			if bor.Status == models.BOOK {
@@ -73,9 +92,7 @@ func (c *Book) Show(id int64) revel.Result {
 		book.SetBorrow(status)
 	}
 
-	borrows = models.FindBorrowsByBookId(c.q, id)
-
-	return c.Render(book, borrows)
+	return nil
 }
 
 func (c *Book) Collect(id int64) revel.Result {

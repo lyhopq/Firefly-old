@@ -1,4 +1,12 @@
 <div class="box">
   {{template "book/detailheader.html" .}}
+  {{if eq .subActive "intro"}}
+  {{template "book/intro.html" .}}
+  {{end}}
+
+  {{if eq .subActive "borrow"}}
+  {{template "book/borrow.html" .}}
+  {{end}}
+
   {{template "pagination.html" .}}
 </div>

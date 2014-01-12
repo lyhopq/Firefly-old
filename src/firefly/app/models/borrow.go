@@ -28,6 +28,23 @@ type Borrow struct {
 	Updated time.Time
 }
 
+func (b *Borrow) ShowStatus() string {
+	switch b.Status {
+	case BOOK:
+		return "预借"
+	case OWN:
+		return "已借"
+	case DUE:
+		return "超期"
+	case PRERET:
+		return "预还"
+	case RETURN:
+		return "已还"
+	default:
+		return ""
+	}
+}
+
 func FindBorrowById(q *qbs.Qbs, id int64) *Borrow {
 	bor := new(Borrow)
 	err := q.WhereEqual("borrow.id", id).Find(bor)

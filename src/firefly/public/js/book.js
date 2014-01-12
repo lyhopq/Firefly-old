@@ -94,15 +94,4 @@ $(document).ready(function(){
         };
   });
 
-
-	$("li#intro").click(function () {
-        $("ul.nav-tabs>li").removeClass("active");
-        $(this).addClass("active");
-	    $.getJSON(id + '/intro', function(data) {
-            if(data) {
-                $("div#content").html(data);
-            }
-        });
-    });
-	$("li#intro").click();
 });
