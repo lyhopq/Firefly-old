@@ -36,6 +36,10 @@ func GetPagination(page int, rows int64, url string) *Pagination {
 	return NewPagination(page, int(rows), url)
 }
 
+func (p *Pagination) Need() bool {
+	return p.rows > ItemsPerPage
+}
+
 func (p *Pagination) CurPage() int {
 	return p.page
 }
@@ -74,7 +78,7 @@ func (p *Pagination) HasPre() (pre bool) {
 	p.calPages()
 
 	pre = true
-	if p.pages == 1 || p.page == 1 {
+	if p.pages <= 1 || p.page == 1 {
 		pre = false
 	}
 	return
@@ -83,7 +87,7 @@ func (p *Pagination) HasNext() (next bool) {
 	p.calPages()
 
 	next = true
-	if p.pages == 1 || p.page == p.pages {
+	if p.pages <= 1 || p.page == p.pages {
 		next = false
 	}
 	return

@@ -8,14 +8,6 @@ import (
 	"github.com/robfig/revel"
 )
 
-//"code.google.com/p/go-uuid/uuid"
-//"fmt"
-//"github.com/coocood/qbs"
-//"github.com/disintegration/imaging"
-
-//"image"
-//"strings"
-
 type User struct {
 	Application
 }
@@ -39,11 +31,6 @@ func (c *User) SignupPost(user models.User) revel.Result {
 		c.Flash.Error("注册用户失败")
 		return c.Redirect(routes.User.Signup())
 	}
-
-	//perm := new(models.Permissions)
-	//perm.UserId = user.Id
-	//perm.Perm = MemberGroup
-	//perm.Save(c.q)
 
 	return c.Redirect(routes.User.Signin())
 }
