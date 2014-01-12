@@ -21,7 +21,7 @@
         <div class="book-meta">
             <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
             {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
-            <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}}/ {{.PublicationDate}}</span></p>
+            <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}} / {{.PublicationDate}}</span></p>
             <p class=""><span class="label">价格</span><span class="labeled-text">{{.Price}}</span></p>
             <p class=""><span class="label">页数</span><span class="labeled-text">{{.Pages}}</span></p>
         </div>
@@ -46,7 +46,7 @@
           {{end}}
           <a class="btn btn-primary" href="">推荐</a>
           {{if .IsBooked}}
-              <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
+              <button href="#" id="borrow" class="btn btn-primary btn-success booked">
               <i class="icon-ok"></i>
               <span>已经预借</span>
               </button>
