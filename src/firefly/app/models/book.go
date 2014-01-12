@@ -53,11 +53,6 @@ func FindBookById(q *qbs.Qbs, id int64) *Book {
 	return book
 }
 
-func CountBook(q *qbs.Qbs) int64 {
-	rows := q.Count("book")
-	return rows
-}
-
 func GetBooks(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Book, int64) {
 	if page < 1 {
 		page = 1

@@ -14,7 +14,7 @@ type BookInfoFetch struct {
 
 func (c BookInfoFetch) Run() {
 	c.Dial()
-	count := models.CountBook(c.q)
+	count := models.BookCount(c.q)
 	fmt.Printf("There are %d books.\n", count)
 	fmt.Printf("DouBan keys: %s.\n", doubanKey)
 	c.Close()

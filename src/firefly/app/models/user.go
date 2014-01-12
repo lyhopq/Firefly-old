@@ -17,8 +17,8 @@ type User struct {
 	//Email           string `qbs:"size:32,unique,notnull"`
 	Password        string `qbs:"-"`
 	ConfirmPassword string `qbs:"-"`
-	HashedPassword  string `qbs:"size:32"`
-	Type            int    `qbs:"default:2"` //1管理员，2普通用户
+	HashedPassword  string `qbs:"size:32,notnull"`
+	Type            int    `qbs:"default:2,notnull"` //1管理员，2普通用户
 	Avatar          string `qbs:"size:255"`
 	//ValidateCode    string      `qbs:"size:255"`
 	//IsActive        bool

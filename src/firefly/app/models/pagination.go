@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	ItemsPerPage = 10 //每页几条记录
+	ItemsPerPage = 12 //每页几条记录
 )
 
 type Pagination struct {
