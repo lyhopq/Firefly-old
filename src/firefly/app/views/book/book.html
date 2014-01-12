@@ -16,8 +16,8 @@
                 <span class="divider">|</span>
                 <span id="read" class="chat" title="{{.Readed}} 次借阅">{{.Readed}}</span>
             </div>
-            <div class="clearfix"></div>
         </div>
+        <div class="clearfix"></div>
         <div class="book-meta">
             <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
             {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
@@ -27,51 +27,51 @@
         </div>
 
         <div class="controls">
-        <div class="pull-left">
-          <span class="label">馆藏：{{.Holding}} 本</span>
-          <span class="label">剩余：{{.Existing}} 本</span>
-        </div>
+          <div class="pull-left">
+            <span class="label">馆藏：{{.Holding}} 本</span>
+            <span class="label">剩余：{{.Existing}} 本</span>
+          </div>
 
-        <div class="pull-right">
-          {{if .IsCollected}}
-              <button href="#" id="collect" class="btn btn-primary btn-success collect">
-              <i class="icon-ok"></i>
-              <span>已经收藏</span>
-              </button>
-          {{else}}
-              <button href="#" id="collect" class="btn btn-primary uncollect">
-              <i class="icon-plus"></i>
-              <span>加入收藏</span>
-              </button>
-          {{end}}
-          <a class="btn btn-primary" href="">推荐</a>
-          {{if .IsBooked}}
-              <button href="#" id="borrow" class="btn btn-primary btn-success booked">
-              <i class="icon-ok"></i>
-              <span>已经预借</span>
-              </button>
-          {{else}}{{if .IsOwned}}
-              <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
-              <i class="icon-ok"></i>
-              <span>已经借阅</span>
-              </button>
-          {{else}}
-              {{if .Has}}
-              <button href="#" id="borrow" class="btn btn-primary unbooked">
-              <i class="icon-plus"></i>
-              <span>加入预借</span>
-              </button>
-              {{else}}
-              <button href="#" id="borrow" class="btn btn-primary disabled">
-              <i class="icon-plus"></i>
-              <span>加入预借</span>
-              </button>
-              {{end}}
-          {{end}}{{end}}
-        </div>
-    </div>
-
+          <div class="pull-right">
+            {{if .IsCollected}}
+                <button href="#" id="collect" class="btn btn-primary btn-success collect">
+                <i class="icon-ok"></i>
+                <span>已经收藏</span>
+                </button>
+            {{else}}
+                <button href="#" id="collect" class="btn btn-primary uncollect">
+                <i class="icon-plus"></i>
+                <span>加入收藏</span>
+                </button>
+            {{end}}
+            <a class="btn btn-primary" href="">推荐</a>
+            {{if .IsBooked}}
+                <button href="#" id="borrow" class="btn btn-primary btn-success booked">
+                <i class="icon-ok"></i>
+                <span>已经预借</span>
+                </button>
+            {{else}}{{if .IsOwned}}
+                <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
+                <i class="icon-ok"></i>
+                <span>已经借阅</span>
+                </button>
+            {{else}}
+                {{if .Has}}
+                <button href="#" id="borrow" class="btn btn-primary unbooked">
+                <i class="icon-plus"></i>
+                <span>加入预借</span>
+                </button>
+                {{else}}
+                <button href="#" id="borrow" class="btn btn-primary disabled">
+                <i class="icon-plus"></i>
+                <span>加入预借</span>
+                </button>
+                {{end}}
+            {{end}}{{end}}
+          </div>
       </div>
+
+    </div>
   </div>
 
 {{end}}
