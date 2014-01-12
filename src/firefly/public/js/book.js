@@ -6,6 +6,7 @@ $(document).ready(function(){
     } else {
         isLogin = false;
     }
+	var id = $(".book").attr("id");
 
 	$("button#collect").unbind("click").click(function () {
         if(!isLogin) {
@@ -14,7 +15,6 @@ $(document).ready(function(){
         }
 
         var button = $(this);
-		var id = $(".book").attr("id");
         var feed = $(".feedback>#collect")
         if(button.hasClass("uncollect")) {
 		    $.getJSON(id + '/collect', function(data) {
@@ -58,7 +58,6 @@ $(document).ready(function(){
         }
 
         var button = $(this);
-		var id = $(".book").attr("id");
         var message = $("#user_message_count>span");
         if(button.hasClass("unbooked")) {
 		    $.getJSON(id + '/booking', function(data) {
@@ -94,4 +93,16 @@ $(document).ready(function(){
         $(this).children("span").text("已经预借");
         };
   });
+
+
+	$("li#intro").click(function () {
+        $("ul.nav-tabs>li").removeClass("active");
+        $(this).addClass("active");
+	    $.getJSON(id + '/intro', function(data) {
+            if(data) {
+                $("div#content").html(data);
+            }
+        });
+    });
+	$("li#intro").click();
 });

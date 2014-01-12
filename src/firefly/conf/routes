@@ -45,7 +45,7 @@ GET     /book/:id/collect                       Book.Collect
 GET     /book/:id/uncollect                     Book.UnCollect
 GET     /book/:id/booking                       Book.Booking
 GET     /book/:id/unbooking                     Book.UnBooking
-#GET     /book/b/:id                               Book.Booking
+GET     /book/:id/intro                         Book.Intro
 
 
 

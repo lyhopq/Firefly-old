@@ -125,3 +125,8 @@ func (c *Book) UnBooking(id int64) revel.Result {
 
 	return c.RenderJson(ok)
 }
+
+func (c *Book) Intro(id int64) revel.Result {
+	book := models.FindBookById(c.q, id)
+	return c.RenderJson(book.Introduction)
+}
