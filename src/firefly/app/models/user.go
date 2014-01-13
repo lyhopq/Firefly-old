@@ -115,7 +115,7 @@ func (u *User) AvatarImgSrc() string {
 }
 
 func UserCount(q *qbs.Qbs) int64 {
-	return q.Count("user")
+	return q.WhereEqual("type", 2).Count("user")
 }
 
 type BookEx struct {

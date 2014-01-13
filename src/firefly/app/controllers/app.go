@@ -153,8 +153,8 @@ func (c *App) Stat() revel.Result {
 	}
 
 	stat := new(Stat)
-	stat.User = models.UserCount(c.q)
 	stat.Book = models.BookCount(c.q)
+	stat.User = models.UserCount(c.q)
 	stat.Topic = 0
 	stat.Replay = 0
 
