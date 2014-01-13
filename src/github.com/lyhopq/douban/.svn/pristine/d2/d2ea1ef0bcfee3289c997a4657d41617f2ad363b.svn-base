@@ -1,0 +1,129 @@
+//
+// Copyright 2010 cloud <cloud@douban>
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+package douban
+
+import (
+  "fmt"
+  "os"
+  "http"
+  "io/ioutil"
+  "xml"
+  "bytes"
+  //"strconv"
+//  "time"
+//  "regexp"
+)
+
+const (
+  kDefaultClient        = "go-douban"
+  kDefaultClientURL     = ""
+  kDefaultClientVersion = "0.1"
+  kDefaultUserAgent     = "go-douban"
+  kErr                  = "GoDouban Error: "
+  kWarn                 = "GoDouban Warning: "
+  kDefaultTimelineAlloc = 20
+  apiKey = "0cb76f8d92f0abc826264ea8b8d2035"
+  _QUERY_PERSON = "http://api.douban.com/people/%d?apikey=%s"
+  _QUERY_FRIEND = "http://api.douban.com/people/%d/contacts?apikey=%s&max-results=100"
+  _QUERY_OAUTH = "http://www.douban.com/service/auth/request_token?oauth_consumer_key=%s"
+)
+
+const (
+  _STATUS = iota
+  _SLICESTATUS
+  _SLICESEARCH
+  _USER
+  _SLICEUSER
+  _BOOL
+  _ERROR
+  _RATELIMIT
+)
+
+func parseResponse(response *http.Response) (string, os.Error) {
+  var b []byte
+  b, _ = ioutil.ReadAll(response.Body)
+  response.Body.Close()
+  bStr := string(b)
+
+  return bStr, nil
+}
+
+
+
+type Api struct {
+  user           string
+  pass           string
+  errors         chan os.Error
+  lastError      os.Error
+  client         string
+  clientURL      string
+  clientVersion  string
+  userAgent      string
+  receiveChannel interface{}
+}
+
+// Creates and initializes new Api objec
+func NewApi() *Api {
+  api := new(Api)
+  api.init()
+  return api
+}
+
+
+// Initializes a new Api object, called by NewApi()
+func (self *Api) init() {
+  self.errors = make(chan os.Error, 16)
+  self.receiveChannel = nil
+  self.client = kDefaultClient
+  self.clientURL = kDefaultClientURL
+  self.clientVersion = kDefaultClientVersion
+  self.userAgent = kDefaultUserAgent
+}
+
+func (self *Api) getJsonFromUrl(url string) string {
+    fmt.Printf("get url %s\n",url)
+  r, _, error := httpGet(url, self.user, self.pass)
+  if error != nil {
+    fmt.Printf(kErr + error.String())
+    return ""
+  }
+
+  data, err := parseResponse(r)
+  if err != nil {
+    fmt.Printf(kErr + err.String())
+    return ""
+  }
+
+  return data
+}
+
+
+func (self Api)GetUserById(id uint64) *User{
+    var user User
+    jsonString := self.getJsonFromUrl(fmt.Sprintf(_QUERY_PERSON,id))
+	buf := bytes.NewBufferString(jsonString)
+    xml.Unmarshal(buf,&user)
+    return &user
+}
+
+func (self Api)GetContactById(id uint64) *Contacts {
+    var con Contacts
+    jsonString := self.getJsonFromUrl(fmt.Sprintf(_QUERY_FRIEND,id))
+	buf := bytes.NewBufferString(jsonString)
+    xml.Unmarshal(buf,&con)
+    return &con
+}
+

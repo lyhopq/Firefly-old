@@ -1,0 +1,11 @@
+
+include $(GOROOT)/src/Make.$(GOARCH)
+
+TARG=douban
+GOFILES=api.go \
+	http_auth.go \
+	user.go \
+
+include $(GOROOT)/src/Make.pkg
+
+.PHONY: doc

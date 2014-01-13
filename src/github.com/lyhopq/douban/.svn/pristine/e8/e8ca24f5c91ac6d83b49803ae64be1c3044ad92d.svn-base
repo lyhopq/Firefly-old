@@ -1,0 +1,52 @@
+//
+// Copyright 2010 cloud <cloud@douban>
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+package douban
+
+import (
+"testing"
+//"os"
+"fmt"
+"time"
+"strconv"
+)
+
+
+const kid = 4129995
+
+func TestUser(t *testing.T){
+    time.Sleep(1e6)
+    fmt.Printf("test user ....\n")
+    api := NewApi()
+    user := api.GetUserById(kid)
+    if user == nil{
+        t.Errorf("find no user\n");
+    }
+    uid,err := strconv.Atoi64(user.Uid)
+    if err != nil || uid != kid{
+        t.Errorf("get wrong id\n")
+    }
+}
+
+func TestContact(t *testing.T){
+    time.Sleep(1e6)
+    fmt.Printf("test friends ....\n")
+    api := NewApi()
+    contact := api.GetContactById(kid)
+    if contact== nil{
+        t.Errorf("find no user\n");
+    }
+    fmt.Printf("you have %d contacts\n",len(contact.Entry))
+}
