@@ -16,6 +16,11 @@
 	{{else}}
     <li><a href="{{url "User.BorrowHis"}}">借阅历史</a></li>
 	{{end}}
+	{{if eq .subActive "collect"}}
+		<li class="active"><a href="javascript:;">收藏</a></li>
+	{{else}}
+    <li><a href="{{url "User.Collected"}}">收藏</a></li>
+	{{end}}
     </ul>
 </div>
 <div class="clearfix"></div>

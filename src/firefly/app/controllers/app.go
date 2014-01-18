@@ -29,6 +29,7 @@ func (c *Application) inject() revel.Result {
 	c.RenderArgs["active"] = c.Name
 	user := c.connected()
 	if user != nil {
+		user.UpdateBooKEx(c.q, user.Id)
 		c.RenderArgs["user"] = user
 		fmt.Println(user.BookCount, user.OwnCount, user.CollectCount)
 	}
@@ -97,11 +98,6 @@ type App struct {
 
 func (c *App) Index() revel.Result {
 	books := models.Recommend(c.q, "hited")
-
-	user := c.connected()
-	if user != nil {
-		user.UpdateBooKEx(c.q, user.Id)
-	}
 
 	return c.Render(books)
 }

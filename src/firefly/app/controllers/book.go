@@ -111,16 +111,16 @@ func (c *Book) Collect(id int64) revel.Result {
 
 func (c *Book) UnCollect(id int64) revel.Result {
 	user := c.connected()
-	var signin bool
+	var ok bool
 	if user != nil {
-		signin = true
+		ok = true
 		models.RemoveCollect(c.q, user.Id, id)
 
 		book := models.FindBookById(c.q, id)
 		book.SubCollect(c.q)
 	}
 
-	return c.RenderJson(signin)
+	return c.RenderJson(ok)
 }
 
 func (c *Book) Booking(id int64) revel.Result {

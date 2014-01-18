@@ -27,4 +27,19 @@ $(document).ready(function(){
 			});
 		};
 	});
+
+	$("button.uncollect").click(function () {
+		if (confirm("确定删除收藏吗?")) {
+			var id = $(this).attr("id");
+			console.log('book/'+ id + '/delete')
+			$.getJSON('/book/'+ id + '/uncollect', function(data) {
+				if (data) {
+					$("tr#" + id).fadeOut("slow", function () {
+						$("tr#" + id).remove();
+					});
+                    total.text(parseInt(total.text())-1);
+				};
+			});
+		};
+	});
 });

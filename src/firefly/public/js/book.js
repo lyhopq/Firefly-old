@@ -15,14 +15,14 @@ $(document).ready(function(){
         }
 
         var button = $(this);
-        var feed = $(".feedback>#collect")
+        var num = $(".collected>.num")
         if(button.hasClass("uncollect")) {
 		    $.getJSON(id + '/collect', function(data) {
                 if(data) {
                     button.removeClass("uncollect").addClass("collect");
                     button.children("i").removeClass().addClass("icon-remove");
                     button.children("span").text("取消收藏");
-                    feed.text(parseInt(feed.text())+1);
+                    num.text(parseInt(num.text())+1);
                 } 
                 });
         } else {
@@ -31,7 +31,7 @@ $(document).ready(function(){
                     button.removeClass("collect").removeClass("btn-danger").addClass("uncollect");
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入收藏");
-                    feed.text(parseInt(feed.text())-1);
+                    num.text(parseInt(num.text())-1);
                 } 
 		    	});
 
@@ -58,14 +58,14 @@ $(document).ready(function(){
         }
 
         var button = $(this);
-        var message = $("#user_message_count>span");
+        var num = $(".booked>.num");
         if(button.hasClass("unbooked")) {
 		    $.getJSON(id + '/booking', function(data) {
                 if(data) {
                     button.removeClass("unbooked").addClass("booked");
                     button.children("i").removeClass().addClass("icon-remove");
                     button.children("span").text("取消预借");
-                    message.text(parseInt(message.text())+1);
+                    num.text(parseInt(num.text())+1);
                 } else {
                     alert("该书已经被借完了！");
                 };
@@ -76,7 +76,7 @@ $(document).ready(function(){
                     button.removeClass("booked").removeClass("btn-danger").addClass("unbooked");
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入预借");
-                    message.text(parseInt(message.text())-1);
+                    num.text(parseInt(num.text())-1);
 		    	};
             })
             };

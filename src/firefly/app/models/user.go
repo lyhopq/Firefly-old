@@ -127,5 +127,6 @@ type BookEx struct {
 func (b *BookEx) UpdateBooKEx(q *qbs.Qbs, uid int64) {
 	b.BookCount = BorrowCount(q, uid, BOOK)
 	b.OwnCount = BorrowCount(q, uid, OWN)
-	b.CollectCount = UserCollect(q, uid)
+	b.CollectCount = UserCollectCount(q, uid)
+	q.Reset()
 }

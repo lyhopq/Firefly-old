@@ -57,6 +57,33 @@
         {{end}}
 	</div>
     {{end}}
+    {{if eq .subActive "collect"}}
+	<div class="content">
+		<h2>收藏图书：<span class="total">{{.total}}</span> 本</h2>
+        {{if gt .total 0}}
+		<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>书名</th>
+				<th>收藏时间</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{range .collects}}
+			<tr id="{{.Book.Id}}">
+				<td>{{.Book.Title}}</td>
+				<td>{{datetime .Created}}</td>
+				<td>
+					<button href="#" class="btn btn-mini btn-danger uncollect" id="{{.Book.Id}}"><i class="icon-remove icon-white"></i> 取消</button>
+				</td>
+			</tr>
+		{{end}}
+		</tbody>
+		</table>
+        {{end}}
+	</div>
+    {{end}}
     {{if eq .subActive "his"}}
 	<div class="content">
         <h2>借过图书：<span class="total">{{.total}}</span> 本</h2>

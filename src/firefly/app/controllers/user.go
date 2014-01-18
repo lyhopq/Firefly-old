@@ -116,6 +116,17 @@ func (c *User) Owned(page int) revel.Result {
 	return c.Render(title, subActive, error)
 }
 
+func (c *User) Collected(page int) revel.Result {
+	title := "收藏"
+	subActive := "collect"
+
+	user := c.connected()
+	collects, total := models.UserCollected(c.q, page, user.Id)
+	pagination := models.GetPagination(page, total, routes.User.Collected(page))
+
+	c.Render(title, subActive, collects, total, pagination)
+	return c.RenderTemplate("user/borrow.html")
+}
 func (c *User) BorrowHis(page int) revel.Result {
 	title := "借阅历史"
 	subActive := "his"
@@ -126,10 +137,6 @@ func (c *User) BorrowHis(page int) revel.Result {
 
 	c.Render(title, subActive, borrows, total, pagination)
 	return c.RenderTemplate("user/borrow.html")
-}
-
-func (c *User) Collected(page int) revel.Result {
-	return nil
 }
 
 func (c *User) BookDel(id int64) revel.Result {
