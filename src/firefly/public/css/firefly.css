@@ -365,61 +365,19 @@ h2[class="title"] .more {
   right: 5px;
 }
 
-.reviews {
-  margin: 10px;
-  width: 100%;
-}
 .reviews li {
   margin-bottom: 20px;
-  min-height: 120px;
   background-image: url("/public/img/bg_item.png");
   background-position: 0 bottom;
   background-repeat: repeat-x;
 }
-.reviews li .cover {
-  margin-right: 15px;
-  width: 80px;
-}
 
-.details {
-  width: 100%;
-  min-height: 220px;
+.reviews .cover {
+  width: 100px;
 }
 
 .details .cover {
-  margin-right: 15px;
   width:150px;
-}
-
-.controls {
-  padding-top:20px;
-}
-
-.reviews .info {
-  width:80%;
-}
-
-.details .info {
-  width:75%;
-}
-
-.info .header h5 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  word-break: break-all;
-  margin-top: 0;
-}
-
-.info .body .feedback {
-  color: #9A9C98;
-  height: 16px;
-  line-height: 16px;
-}
-
-.info .body .feedback span {
-  color: #81b38a;
-  padding: 0 6px;
 }
 
 span.eye {

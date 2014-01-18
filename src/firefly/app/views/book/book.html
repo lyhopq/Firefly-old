@@ -1,77 +1,99 @@
 <div class="box">
 {{with .book}}
   <div class="book details" id="{{.Id}}">
-      <div class="cover pull-left">
-          <a href="{{url "Book.Show" .Id}}"><img src="{{.CoverImgSrc}}"></a>
-      </div>
-      <div class="info pull-left">
-        <div class="header">
-            <h5 class="pull-left"><a href="{{url "Book.Show" .Id}}">{{.Title}}</a></h5>
-            <div class="feedback muted pull-right">
-                <span id="eye" class="eye" title="被查看 {{.Hited}} 次">{{.Hited}}</span>
-                <span class="divider">|</span>
-                <span id="comment" class="thumbsup" title="{{.Commented}} 次评论">{{.Commented}}</span>
-                <span class="divider">|</span>
-                <span id="collect" class="thumbsup" title="{{.Collected}} 人收藏">{{.Collected}}</span>
-                <span class="divider">|</span>
-                <span id="read" class="chat" title="{{.Readed}} 次借阅">{{.Readed}}</span>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="book-meta">
-            <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
-            {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
-            <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}} / {{.PublicationDate}}</span></p>
-            <p class=""><span class="label">价格</span><span class="labeled-text">{{.Price}}</span></p>
-            <p class=""><span class="label">页数</span><span class="labeled-text">{{.Pages}}</span></p>
-        </div>
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tbody>
+        <tr>
+            <td class="cover" valign="middle" align="center">
+                <a href="{{url "Book.Show" .Id}}"><img src="{{.CoverImgSrc}}"></a>
+            </td>
+            <td width="10"></td>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <h5 class=""><a href="{{url "Book.Show" .Id}}">{{.Title}}</a></h5>
+                </td>
+                <td width="auto"></td>
+                <td>
+                    <div class="feedback muted pull-right">
+                        <span id="eye" class="eye" title="被查看 {{.Hited}} 次">{{.Hited}}</span>
+                        <span class="divider">|</span>
+                        <span id="comment" class="thumbsup" title="{{.Commented}} 次评论">{{.Commented}}</span>
+                        <span class="divider">|</span>
+                        <span id="collect" class="thumbsup" title="{{.Collected}} 人收藏">{{.Collected}}</span>
+                        <span class="divider">|</span>
+                        <span id="read" class="chat" title="{{.Readed}} 次借阅">{{.Readed}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="book-meta">
+                        <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
+                        {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
+                        <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}} / {{.PublicationDate}}</span></p>
+                        <p class=""><span class="label">价格</span><span class="labeled-text">{{.Price}}</span></p>
+                        <p class=""><span class="label">页数</span><span class="labeled-text">{{.Pages}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            <tr height="20"></tr>
+            <tr>
+                <td>
+                  <div class="">
+                    <span class="label">馆藏：{{.Holding}} 本</span>
+                    <span class="label">剩余：{{.Existing}} 本</span>
+                  </div>
+                </td>
 
-        <div class="controls">
-          <div class="pull-left">
-            <span class="label">馆藏：{{.Holding}} 本</span>
-            <span class="label">剩余：{{.Existing}} 本</span>
-          </div>
-
-          <div class="pull-right">
-            {{if .IsCollected}}
-                <button href="#" id="collect" class="btn btn-primary btn-success collect">
-                <i class="icon-ok"></i>
-                <span>已经收藏</span>
-                </button>
-            {{else}}
-                <button href="#" id="collect" class="btn btn-primary uncollect">
-                <i class="icon-plus"></i>
-                <span>加入收藏</span>
-                </button>
-            {{end}}
-            <a class="btn btn-primary" href="">推荐</a>
-            {{if .IsBooked}}
-                <button href="#" id="borrow" class="btn btn-primary btn-success booked">
-                <i class="icon-ok"></i>
-                <span>已经预借</span>
-                </button>
-            {{else}}{{if .IsOwned}}
-                <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
-                <i class="icon-ok"></i>
-                <span>已经借阅</span>
-                </button>
-            {{else}}
-                {{if .Has}}
-                <button href="#" id="borrow" class="btn btn-primary unbooked">
-                <i class="icon-plus"></i>
-                <span>加入预借</span>
-                </button>
-                {{else}}
-                <button href="#" id="borrow" class="btn btn-primary disabled">
-                <i class="icon-plus"></i>
-                <span>加入预借</span>
-                </button>
-                {{end}}
-            {{end}}{{end}}
-          </div>
-      </div>
-
-    </div>
+                <td width="auto"></td>
+                <td>
+                  <div class="pull-right">
+                    {{if .IsCollected}}
+                        <button href="#" id="collect" class="btn btn-primary btn-success collect">
+                        <i class="icon-ok"></i>
+                        <span>已经收藏</span>
+                        </button>
+                    {{else}}
+                        <button href="#" id="collect" class="btn btn-primary uncollect">
+                        <i class="icon-plus"></i>
+                        <span>加入收藏</span>
+                        </button>
+                    {{end}}
+                    <a class="btn btn-primary" href="">推荐</a>
+                    {{if .IsBooked}}
+                        <button href="#" id="borrow" class="btn btn-primary btn-success booked">
+                        <i class="icon-ok"></i>
+                        <span>已经预借</span>
+                        </button>
+                    {{else}}{{if .IsOwned}}
+                        <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
+                        <i class="icon-ok"></i>
+                        <span>已经借阅</span>
+                        </button>
+                    {{else}}
+                        {{if .Has}}
+                        <button href="#" id="borrow" class="btn btn-primary unbooked">
+                        <i class="icon-plus"></i>
+                        <span>加入预借</span>
+                        </button>
+                        {{else}}
+                        <button href="#" id="borrow" class="btn btn-primary disabled">
+                        <i class="icon-plus"></i>
+                        <span>加入预借</span>
+                        </button>
+                        {{end}}
+                    {{end}}{{end}}
+                  </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+        </tr>
+    </tbody></table>
   </div>
 {{end}}
 </div>

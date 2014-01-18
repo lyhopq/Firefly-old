@@ -1,28 +1,50 @@
 <ul class="books unstyled reviews">
 {{range .books}}
 <li class="reviews">
-    <div class="cover pull-left">
-        <a href="{{url "Book.Show" .Id}}" class="pull-left"><img src="{{.CoverImgSrc}}"></a>
-    </div>
-
-    <div class="info pull-left">
-      <div class="header">
-          <h5 class="pull-left"><a href="{{url "Book.Show" .Id}}">{{.Title}}</a></h5>
-          <div class="feedback muted pull-right">
-              <span class="eye" title="被查看 {{.Hited}} 次">{{.Hited}}</span>
-              <span class="divider">|</span>
-              <span class="thumbsup" title="{{.Commented}} 次评论">{{.Commented}}</span>
-              <span class="divider">|</span>
-              <span class="chat" title="{{.Readed}} 次借阅">{{.Readed}}</span>
-          </div>
-          <div class="clearfix"></div>
-      </div>
-        <div class="book-meta">
-            <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
-            {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
-            <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}} / {{.PublicationDate}}</span></p>
-            <p class=""><span class="label">页数</span><span class="labeled-text">{{.Pages}} 页</span></p>
-        </div>
+  <div class="book reviews" id="{{.Id}}">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tbody>
+        <tr>
+            <td class="cover" valign="middle" align="center">
+                <a href="{{url "Book.Show" .Id}}"><img src="{{.CoverImgSrc}}"></a>
+            </td>
+            <td width="10"></td>
+            <td>
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <td>
+                    <h5 class=""><a href="{{url "Book.Show" .Id}}">{{.Title}}</a></h5>
+                </td>
+                <td width="auto"></td>
+                <td>
+                    <div class="feedback muted pull-right">
+                        <span id="eye" class="eye" title="被查看 {{.Hited}} 次">{{.Hited}}</span>
+                        <span class="divider">|</span>
+                        <span id="comment" class="thumbsup" title="{{.Commented}} 次评论">{{.Commented}}</span>
+                        <span class="divider">|</span>
+                        <span id="collect" class="thumbsup" title="{{.Collected}} 人收藏">{{.Collected}}</span>
+                        <span class="divider">|</span>
+                        <span id="read" class="chat" title="{{.Readed}} 次借阅">{{.Readed}}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="book-meta">
+                        <p class="author"><span class="label">作者</span><span class="labeled-text">{{.Author}}</span></p>
+                        {{if .Translator}}<p class="translator"><span class="label">译者</span><span class="labeled-text">{{.Translator}}</span></p>{{end}}
+                        <p class=""><span class="label">出版信息</span><span class="labeled-text">{{.Publisher}} / {{.PublicationDate}}</span></p>
+                        <p class=""><span class="label">价格</span><span class="labeled-text">{{.Price}}</span></p>
+                        <p class=""><span class="label">页数</span><span class="labeled-text">{{.Pages}}</span></p>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+            </td>
+        </tr>
+    </tbody></table>
   </div>
 </li>
 {{end}}
