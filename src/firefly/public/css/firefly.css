@@ -405,6 +405,12 @@ span.chat {
   padding-left: 20px;
 }
 
+.book-title a {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .book-meta {
   margin-top: 8px;
 }
