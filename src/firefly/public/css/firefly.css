@@ -380,6 +380,11 @@ h2[class="title"] .more {
   width:150px;
 }
 
+.cover img{
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+}
+
 span.eye {
   background: url(/public/img/Eye.png) no-repeat;
   padding-left: 20px;
@@ -533,4 +538,12 @@ margin-top: 8px;
 .article-rating {
 line-height: 18px;
 color: #825d5b;
+}
+
+.intro p {
+text-indent: 2em;
+line-height: 24px;
+min-height: 24px;
+font-size: 14px;
+margin-bottom: 0;
 }

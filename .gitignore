@@ -25,8 +25,8 @@ _testmain.go
 bin
 exe
 pkg
-#src/github.com
-#src/code.google.com
+src/github.com
+src/code.google.com
 *.log
 src/firefly/public/upload
 src/gorevel

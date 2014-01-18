@@ -1,3 +1,7 @@
 <div class="intro">
-    {{.book.Introduction}}
+    {{with $ps := par .book.Introduction}}
+    {{range $ps}}
+    <p>{{.}}</p>
+    {{end}}
+    {{end}}
 </div>
