@@ -43,8 +43,8 @@
             <tr>
                 <td>
                   <div class="">
-                    <span class="label">馆藏：{{.Holding}} 本</span>
-                    <span class="label">剩余：{{.Existing}} 本</span>
+                    <span class="label grow-rotate">馆藏：{{.Holding}} 本</span>
+                    <span class="label grow-rotate">剩余：{{.Existing}} 本</span>
                   </div>
                 </td>
 
@@ -52,35 +52,35 @@
                 <td>
                   <div class="pull-right">
                     {{if .IsCollected}}
-                        <button href="#" id="collect" class="btn btn-primary btn-success collect">
+                        <button href="#" id="collect" class="glow btn btn-primary btn-success collect">
                         <i class="icon-ok"></i>
                         <span>已经收藏</span>
                         </button>
                     {{else}}
-                        <button href="#" id="collect" class="btn btn-primary uncollect">
+                        <button href="#" id="collect" class="glow btn btn-primary uncollect">
                         <i class="icon-plus"></i>
                         <span>加入收藏</span>
                         </button>
                     {{end}}
-                    <a class="btn btn-primary" href="">推荐</a>
+                    <a class="glow btn btn-primary" href="">推荐</a>
                     {{if .IsBooked}}
-                        <button href="#" id="borrow" class="btn btn-primary btn-success booked">
+                        <button href="#" id="borrow" class="glow btn btn-primary btn-success booked">
                         <i class="icon-ok"></i>
                         <span>已经预借</span>
                         </button>
                     {{else}}{{if .IsOwned}}
-                        <button href="#" id="borrow" class="btn btn-primary btn-success disabled">
+                        <button href="#" id="borrow" class="glow btn btn-primary btn-success disabled">
                         <i class="icon-ok"></i>
                         <span>已经借阅</span>
                         </button>
                     {{else}}
                         {{if .Has}}
-                        <button href="#" id="borrow" class="btn btn-primary unbooked">
+                        <button href="#" id="borrow" class="glow btn btn-primary unbooked">
                         <i class="icon-plus"></i>
                         <span>加入预借</span>
                         </button>
                         {{else}}
-                        <button href="#" id="borrow" class="btn btn-primary disabled">
+                        <button href="#" id="borrow" class="glow btn btn-primary disabled">
                         <i class="icon-plus"></i>
                         <span>加入预借</span>
                         </button>
