@@ -372,11 +372,11 @@ h2[class="title"] .more {
   background-repeat: repeat-x;
 }
 
-.reviews .cover {
+.reviews .cover, .reviews .cover img{
   width: 100px;
 }
 
-.details .cover {
+.details .cover, .details .cover img {
   width:150px;
 }
 
