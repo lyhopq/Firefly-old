@@ -4,13 +4,13 @@
         <tbody>
         <tr>
             {{if .pagination.HasPre}}
-            <td width="120" align="left"><input type="button" onclick="location.href = '{{.pagination.PrePage}}'" value="‹ 上一页" class="super normal button"></td>
+            <td width="120" align="left"><input type="button" onclick="location.href = '{{.pagination.PrePage}}'" value="‹ 上一页" class="button glow gray"></td>
             {{else}}
             <td width="120" align="left"></td>
             {{end}}
             <td width="auto" align="center"><strong class="fade">{{.pagination.PageStr}}</strong></td>
             {{if .pagination.HasNext}}
-            <td width="120" align="right"><input type="button" onclick="location.href = '{{.pagination.NextPage}}'" value="下一页 ›" class="super normal button"></td>
+            <td width="120" align="right"><input type="button" onclick="location.href = '{{.pagination.NextPage}}'" value="下一页 ›" class="button glow gray"></td>
             {{else}}
             <td width="120" align="right"></td>
             {{end}}

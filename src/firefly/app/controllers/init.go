@@ -12,7 +12,7 @@ func init() {
 	revel.InterceptMethod((*Application).inject, revel.BEFORE)
 	revel.InterceptMethod((*Application).End, revel.AFTER)
 
-	revel.TemplateFuncs["par"] = func(s string) []string {
+	revel.TemplateFuncs["section"] = func(s string) []string {
 		return strings.Split(s, "\n")
 	}
 }

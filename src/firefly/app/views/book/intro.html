@@ -1,5 +1,5 @@
 <div class="intro">
-    {{with $ps := par .book.Introduction}}
+    {{with $ps := section .book.Introduction}}
     {{range $ps}}
     <p>{{.}}</p>
     {{end}}
