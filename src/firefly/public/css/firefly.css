@@ -352,6 +352,9 @@ h2[class="title"] .more {
 .cover img{
   -moz-border-radius: 8px;
   border-radius: 8px;
+  -webkit-box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 span.eye {
