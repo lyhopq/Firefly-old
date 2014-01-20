@@ -501,10 +501,22 @@ color: #825d5b;
   margin: 10px 0;
   padding-left: 0;
 }
+
 .footer-links li:first-child {
   padding-left: 0;
 }
+
 .footer-links li {
   display: inline;
   padding: 0 2px;
+}
+
+#user {
+  padding: 10px;
+  margin-bottom: 30px;
+  background: url(/public/img/early-bg.png) no-repeat;
+  -moz-background-size:260px  170px;
+  -webkit-background-size:260px 170px;
+  -o-background-size:260px 170px;
+  background-size:260px 170px;
 }
