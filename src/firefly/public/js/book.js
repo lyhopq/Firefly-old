@@ -17,7 +17,7 @@ $(document).ready(function(){
         var button = $(this);
         var num = $(".collected>.num")
         if(button.hasClass("uncollect")) {
-		    $.getJSON(id + '/collect', function(data) {
+		    $.getJSON('/book/' + id + '/collect', function(data) {
                 if(data) {
                     button.removeClass("uncollect").addClass("collect");
                     button.children("i").removeClass().addClass("icon-remove");
@@ -26,7 +26,7 @@ $(document).ready(function(){
                 } 
                 });
         } else {
-		    $.getJSON(id + '/uncollect', function(data) {
+		    $.getJSON('/book/' + id + '/uncollect', function(data) {
                 if(data) {
                     button.removeClass("collect").removeClass("btn-danger").addClass("uncollect");
                     button.children("i").removeClass().addClass("icon-plus");
@@ -60,7 +60,7 @@ $(document).ready(function(){
         var button = $(this);
         var num = $(".booked>.num");
         if(button.hasClass("unbooked")) {
-		    $.getJSON(id + '/booking', function(data) {
+		    $.getJSON('/book/' + id + '/booking', function(data) {
                 if(data) {
                     button.removeClass("unbooked").addClass("booked");
                     button.children("i").removeClass().addClass("icon-remove");
@@ -71,7 +71,7 @@ $(document).ready(function(){
                 };
 		    	});
         } else if(button.hasClass("booked")) {
-		    $.getJSON(id + '/unbooking', function(data) {
+		    $.getJSON('/book/' + id + '/unbooking', function(data) {
                 if(data) {
                     button.removeClass("booked").removeClass("btn-danger").addClass("unbooked");
                     button.children("i").removeClass().addClass("icon-plus");
