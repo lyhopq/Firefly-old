@@ -109,8 +109,9 @@ func (c *App) Search(q string, page int) revel.Result {
 	)
 
 	books, rows = models.SearchBooks(c.q, page, []string{strings.TrimSpace(q)})
+	pagination := models.GetPagination(page, rows, routes.App.Search(q, page))
 	if rows > 0 {
-		return c.Render(books, rows)
+		return c.Render(books, rows, pagination)
 	}
 
 	text := []byte(q)
@@ -119,7 +120,7 @@ func (c *App) Search(q string, page int) revel.Result {
 	keys = util.Filter(keys, util.IsNotIn([]string{" ", "的", "和", "我", "与"}))
 
 	books, rows = models.SearchBooks(c.q, page, keys)
-	pagination := models.GetPagination(page, rows, routes.App.Search(q, page))
+	pagination = models.GetPagination(page, rows, routes.App.Search(q, page))
 
 	return c.Render(books, rows, pagination)
 }

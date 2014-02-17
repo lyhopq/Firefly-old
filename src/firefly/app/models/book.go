@@ -88,10 +88,9 @@ func SearchBooks(q *qbs.Qbs, page int, value []string) ([]*Book, int64) {
 	page -= 1
 
 	var books []*Book
-	var rows int64
 
 	if len(value) < 1 {
-		return books, rows
+		return books, 0
 	}
 	condition := qbs.NewCondition("title like ?", "%"+value[0]+"%")
 	if len(value) > 1 {
@@ -100,13 +99,13 @@ func SearchBooks(q *qbs.Qbs, page int, value []string) ([]*Book, int64) {
 		}
 	}
 
+	rows := q.Condition(condition).Count("book")
 	err := q.Condition(condition).OrderByDesc("collected").OmitFields("Introduction").
 		Limit(ItemsPerPage).Offset(page * ItemsPerPage).FindAll(&books)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	rows = int64(len(books))
 	return books, rows
 }
 
