@@ -33,3 +33,4 @@ src/gorevel
 test-results/
 tmp/
 routes/
+*.tags*
