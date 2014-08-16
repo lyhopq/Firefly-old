@@ -3,12 +3,13 @@ package models
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/coocood/qbs"
-	"github.com/robfig/revel"
 	"io"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/coocood/qbs"
+	"github.com/robfig/revel"
 )
 
 type User struct {
@@ -29,7 +30,7 @@ type User struct {
 }
 
 var (
-	nameRegex = regexp.MustCompile("^\\w*$")
+	nameRegex = regexp.MustCompile("^\\S*$")
 )
 
 func NewUser() *User {
@@ -41,7 +42,7 @@ func NewUser() *User {
 func (user *User) Validate(q *qbs.Qbs, v *revel.Validation) {
 	v.Required(user.Name).Message("请输入用户名")
 	v.MinSize(user.Name, 3).Message("用户名最少三位")
-	valid := v.Match(user.Name, nameRegex).Message("只能使用字母、数字和下划线")
+	valid := v.Match(user.Name, nameRegex).Message("用户名不能有空格")
 	if valid.Ok {
 		if user.HasName(q) {
 			err := &revel.ValidationError{
