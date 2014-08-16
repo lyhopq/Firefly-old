@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+
 	"github.com/coocood/qbs"
 
 	"time"
@@ -77,12 +78,28 @@ func FindBorrowsByBookId(q *qbs.Qbs, bid int64) []*Borrow {
 	return borrows
 }
 
-func AddBooking(q *qbs.Qbs, uid, bid int64) bool {
+func BorrowStatus(q *qbs.Qbs, uid, bid int64) int {
+	borrows := FindBorrow(q, uid, bid)
+	status := NOTBORROW
+	for _, bor := range borrows {
+		if bor.Status == BOOK {
+			status = BOOK
+			break
+		} else if bor.Status > BOOK && bor.Status < RETURN {
+			status = OWN
+			break
+		}
+	}
+
+	return status
+}
+
+func AddBooking(q *qbs.Qbs, uid, bid int64) (bool, int) {
 	book := FindBookById(q, bid)
 	if book.Existing != 0 {
 		book.Existing -= 1
 	} else {
-		return false
+		return false, book.Existing
 	}
 
 	bor := new(Borrow)
@@ -90,28 +107,28 @@ func AddBooking(q *qbs.Qbs, uid, bid int64) bool {
 	bor.BookId = bid
 	bor.Status = BOOK
 	if _, err := q.Save(bor); err != nil {
-		return false
+		return false, book.Existing
 	}
 
 	q.Save(book)
 
-	return true
+	return true, book.Existing
 }
 
-func RemoveBooking(q *qbs.Qbs, uid, bid int64) bool {
+func RemoveBooking(q *qbs.Qbs, uid, bid int64) (bool, int) {
 	book := FindBookById(q, bid)
 	book.Existing += 1
 
 	bor := FindBorrow(q, uid, bid)
 	if len(bor) > 0 {
 		if _, err := q.Delete(bor[0]); err != nil {
-			return false
+			return false, book.Existing
 		}
 
 		q.Save(book)
 	}
 
-	return true
+	return true, book.Existing
 }
 
 func GetBorrows(q *qbs.Qbs, page int, column string, value interface{}, order string) ([]*Borrow, int64) {

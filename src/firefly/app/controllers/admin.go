@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 
+	"fmt"
+
 	"github.com/lyhopq/douban"
 	"github.com/robfig/revel"
 )
@@ -168,6 +170,7 @@ func fetchBook(isbn string, book *models.Book) {
 	book.PublicationDate = dBook.PubDate
 
 	fileName := "thumb_" + isbn + ".jpg"
+	fmt.Println(dBook.Cover.Large, uploadPath+fileName)
 	_, err = getImg(dBook.Cover.Large, uploadPath+fileName)
 	if err == nil {
 		book.Cover = fileName

@@ -59,24 +59,27 @@ $(document).ready(function(){
 
         var button = $(this);
         var num = $(".booked>.num");
+        var rest = $("#rest");
         if(button.hasClass("unbooked")) {
 		    $.getJSON('/book/' + id + '/booking', function(data) {
-                if(data) {
+                if(data.Ok) {
                     button.removeClass("unbooked").addClass("booked");
                     button.children("i").removeClass().addClass("icon-remove");
                     button.children("span").text("取消预借");
                     num.text(parseInt(num.text())+1);
+                    rest.text(data.Count);
                 } else {
                     alert("该书已经被借完了！");
                 };
 		    	});
         } else if(button.hasClass("booked")) {
 		    $.getJSON('/book/' + id + '/unbooking', function(data) {
-                if(data) {
+                if(data.Ok) {
                     button.removeClass("booked").removeClass("btn-danger").addClass("unbooked");
                     button.children("i").removeClass().addClass("icon-plus");
                     button.children("span").text("加入预借");
                     num.text(parseInt(num.text())-1);
+                    rest.text(data.Count);
 		    	};
             })
             };

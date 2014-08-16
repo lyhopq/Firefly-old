@@ -2,10 +2,11 @@ package models
 
 import (
 	"fmt"
-	"github.com/coocood/qbs"
-	"github.com/robfig/revel"
 	"strings"
 	"time"
+
+	"github.com/coocood/qbs"
+	"github.com/robfig/revel"
 )
 
 type Book struct {

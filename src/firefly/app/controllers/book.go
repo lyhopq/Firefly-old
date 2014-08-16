@@ -80,15 +80,7 @@ func (c *Book) updateBookInfo(book *models.Book) revel.Result {
 			book.SetCollected(false)
 		}
 
-		borrows := models.FindBorrow(c.q, user.Id, book.Id)
-		status := models.NOTBORROW
-		for _, bor := range borrows {
-			if bor.Status == models.BOOK {
-				status = models.BOOK
-			} else if bor.Status > models.BOOK && bor.Status < models.RETURN {
-				status = models.OWN
-			}
-		}
+		status := models.BorrowStatus(c.q, user.Id, book.Id)
 		book.SetBorrow(status)
 	}
 
@@ -123,24 +115,33 @@ func (c *Book) UnCollect(id int64) revel.Result {
 	return c.RenderJson(ok)
 }
 
+type Ret struct {
+	Ok    bool
+	Count int
+}
+
 func (c *Book) Booking(id int64) revel.Result {
 	user := c.connected()
-	var ok bool
+	var ret Ret
 	if user != nil {
-		ok = models.AddBooking(c.q, user.Id, id)
+		status := models.BorrowStatus(c.q, user.Id, id)
+		if status != models.BOOK && status != models.OWN {
+			ret.Ok, ret.Count = models.AddBooking(c.q, user.Id, id)
+		}
+
 	}
 
-	return c.RenderJson(ok)
+	return c.RenderJson(ret)
 }
 
 func (c *Book) UnBooking(id int64) revel.Result {
 	user := c.connected()
-	var ok bool
+	var ret Ret
 	if user != nil {
-		ok = models.RemoveBooking(c.q, user.Id, id)
+		ret.Ok, ret.Count = models.RemoveBooking(c.q, user.Id, id)
 	}
 
-	return c.RenderJson(ok)
+	return c.RenderJson(ret)
 }
 
 func (c *Book) Intro(id int64) revel.Result {
