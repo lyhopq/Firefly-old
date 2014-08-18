@@ -153,6 +153,8 @@ func (c *Admin) RejectReturn(id int64) revel.Result {
 
 func fetchBook(isbn string, book *models.Book) {
 	api := douban.NewApi()
+	api.SetProxy(proxy)
+
 	dBook := api.GetBookByIsbn(isbn)
 
 	book.Title = dBook.Title

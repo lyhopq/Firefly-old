@@ -88,6 +88,7 @@ func Init() {
 	registerDb(driver, dbname, user, password, host)
 
 	doubanKey, _ = c.String("keys", "keys.douban")
+	proxy, _ = c.String("http", "http.proxy")
 
 	segmenter.LoadDictionary(basePath + "/conf/dict.txt")
 }

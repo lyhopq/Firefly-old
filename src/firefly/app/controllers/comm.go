@@ -42,6 +42,7 @@ var (
 	Smtp       SmtpType
 
 	doubanKey string = ""
+	proxy     string = ""
 
 	segmenter sego.Segmenter
 )
